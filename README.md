@@ -41,16 +41,17 @@ In a desired directory (Mac/Linux) with 'git' installed, run:
 
 	git clone https://github.com/viochemist/NucAcidNMR.git
 
-Once instaled, collect any updates by running:
+Once installed, collect any updates by running:
 
 	git pull
 
 To contribute, make changes to your local versions and then run:
 
+	git add <changed files>
 	git commit -m "Message about changes"
 	git push
 
-Always be sure to pull and merge before pushing any changes. This is a very basic 
+Always be sure to pull and merge before pushing any changes.  This is a very basic 
 workflow for now. Once the library has reached some sort of stable level, a master
 and development branch will be formed. For now, I'm just "hunting and gathering".
 
