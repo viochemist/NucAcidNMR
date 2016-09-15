@@ -10,45 +10,45 @@ Priorities
 
 - Fingerprint spectra
 
--- Aromatic C2/C6/C8
+ - Aromatic C2/C6/C8
 
--- Aromatic C5
+ - Aromatic C5
 
--- Imino
+ - Imino
 
--- TROSY, Enhance HSQC, and FAST/BEST versions
+ - TROSY, Enhance HSQC, and FAST/BEST versions
 
 - Assignment
 
--- HCN Base-to-ribose connectivities
+ - HCN Base-to-ribose connectivities
 
--- Ribose TOCSY
+ - Ribose TOCSY
 
--- Nucleobase TOCSY
+ - Nucleobase TOCSY
 
--- Hydrogen bond experiments
+ - Hydrogen bond experiments
 
--- 31P correlations
+ - 31P correlations
 
 - Structure
 
--- 2D NOESY
+ - 2D NOESY
 
--- 3D N15-edited NOESY
+ - 3D N15-edited NOESY
 
--- 3D C13-edited NOESY
+ - 3D C13-edited NOESY
 
--- RDC experiments
+ - RDC experiments
 
 - Dynamics
 
--- Nucleobase R1, R1rho
+ - Nucleobase R1, R1rho
 
--- Imino R1, R2cpmg, R1rho
+ - Imino R1, R2cpmg, R1rho
 
--- Ribose R1, R1rho
+ - Ribose R1, R1rho
 
--- pseudo2D 15N & 13C R1rho
+ - pseudo2D 15N & 13C R1rho
 
--- pseudo3D 15N & 13C CEST
+ - pseudo3D 15N & 13C CEST
 
