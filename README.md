@@ -5,6 +5,7 @@ Objectives
 ----------
 
 1) To build a thorough library of nucleic acid pulse sequences
+
 2) To optimize all sequences for quick and easy setup by any user
 
 Conventions
