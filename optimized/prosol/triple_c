@@ -1,0 +1,137 @@
+#*******************************************************************
+#
+# $Source: /sc/CvsTree/sc/gen/src/prg/lists/prosol/pulseassign/triple_c,v $
+#
+# Copyright (c) 2009
+# Bruker BioSpin GmbH
+# D-76287 Rheinstetten, Germany
+#
+# All Rights Reserved
+#
+#
+# $Id: triple_c,v 1.6.2.2 2015/09/17 08:26:25 tk Exp $
+#
+#*******************************************************************
+#
+#avance-version (15/08/19)
+Version=2.001;
+#
+#pulses
+#
+P[0]=PW90;1				#  90 deg pulse F1
+P[1]=PW90;1				#  90 deg pulse F1, 13C
+P[2]=PW90*2;1				# 180 deg pulse F1, 13C
+P[3]=PW90;2				#  90 deg pulse F2, 1H
+P[4]=PW90*2;2				# 180 deg pulse F2, 1H
+P[5]=SQPW[1]*0.66;1			#  60 deg pulse F1, TOCSY
+P[6]=SQPW[1];1				#  90 deg pulse F1, TOCSY 13C
+P[7]=SQPW[1]*2;1			# 180 deg pulse F1, TOCSY
+P[8]=SHPW[4];1				# adiabatic 180 inversion F1, 13C
+P[9]=SQPW[1];2				#  90 deg pulse F2, TOCSY
+P[10]=SQPW[1]*2;2			# 180 deg pulse F2, TOCSY
+P[11]=SHPW[6];1				#  Cali sel. 90 deg, F1, 13C
+P[12]=SHPW[8];1				#  Cali sel.180 deg, F1, 13C 
+P[13]=SHPW[10];2			#  90 deg NH, F2
+P[14]=SQPW[18];1                        # 180 deg CPMG CO (T2) matched field
+P[15]=SQPW[16];3                        # CPMG pulse, F3, 15N (T2)
+#
+P[18]=SQPW[8];1  			# TOCSY power (high sel.), F1, 13C
+#
+P[21]=PW90;3				#  90 deg pulse F3, 15N
+P[22]=PW90*2;3				# 180 deg pulse F3, 15N
+P[23]=SHPW[15];1                        # Calpha med sel. 180 deg, F1, 13C
+P[24]=SHPW[5];1  			# adiabatic 180 refocussing F1, 13C
+P[25]=SHPW[11];1			# Calpha sel. 180 deg, F1, 13C
+P[26]=SQPW[0];2				#  90 deg pulse F2, 1H, dec.
+P[27]=SHPW[9];1                         # Calpha sel.  90 deg, F2, 13C
+#
+P[29]=SHPW[5];2				# flip back pulse F2, 1H
+P[30]=SHPW[21];1			# sim Ca+CO 180 deg, F1 13C
+#
+P[33]=SHPW[15];1                        # Calpha med sel. 180 deg, F2, 13C
+P[34]=SHPW[16];1                        # Calpha high sel. 180 deg, F2, 13C
+P[35]=SHPW[17];1                        # Calpha high sel. 90 deg, F2, 13C
+#
+P[39]=SHPW[14];1                        # 180 deg, F1, Bip
+#
+P[42]=SHPW[12];2                        # 180 deg, F2, H(N)
+P[43]=SHPW[13];2                        #  90 deg, F2, H(N)
+P[44]=SHPW[15];2                        # 180 deg, F2, 180 broadband 1H
+#
+#decoupling pulses
+#
+PCPD[1]=SQPW[0];1                       # 90 deg pulse F1, 1H, dec.
+PCPD[2]=SQPW[0];2                       # 90 deg pulse F2, 13C, dec.
+PCPD[3]=SQPW[0];3                       # 90 deg pulse F3, 15N, dec.
+PCPD[4]=SQPW[0];4                       # 90 deg pulse F4, 2H, dec.
+#
+PCPD[8]=SHPW[22];2
+#
+# power levels
+#
+PLW[1]=PL90;1				# high power, F1, 13C
+PLW[2]=PL90;2				# high power, F2, 1H
+PLW[3]=PL90;3				# high power, F3, 15N
+PLW[4]=PL90;4				# high power, F4, 2H
+#
+PLW[10]=SQPL[1];1                       # TOCSY power, F1, 1H
+PLW[11]=SQPL[2];1                       # ROESY power, F1, 1H
+PLW[12]=SQPL[0];2                       # dec. power, F2, 1H
+PLW[13]=SQPL[4];2			# dec. power 2, F2, 1H
+#
+PLW[15]=SQPL[1];2			# TOCSY power, F2, 1H
+PLW[16]=SQPL[0];3			# dec. power, F3, 15N
+PLW[17]=SQPL[0];4			# dec. power, F4, 2H
+PLW[18]=SQPL[8];1			# TOCSY power (high sel.), F1, 13C
+#
+PLW[20]=SQPL[18];1                      # 180 deg, F1, 180 matched field 13C CO cpmg
+#
+PLW[23]=SQPL[16];3                      # CPMG power, F3, 15N (T2)
+PLW[24]=SQPL[14];2			# HD decoupling, F2
+#
+#
+# shapes
+#
+SH[3]=SH[15];2                          # 180 deg, F2, 180 broadband 1H
+SH[4]=SH[14];1                          # 180 deg Bip, F1, inversion
+#
+SH[7]=SH[5];1				# adiabatic 180 refocussing, F1 13C
+SH[8]=SH[15];1                          # Calpha med sel. 180 deg, F2, 13C
+SH[9]=SH[16];1                          # Calpha high sel. 180 deg, F2, 13C off res.
+SH[10]=SH[9];1                          # Calpha sel. 90 deg, F2, 13C
+SH[11]=SH[5];2				# flip-back pulse, F2, 1H
+SH[12]=SH[10];1                         # Calpha sel. 90 deg, F2, 13C, tr
+SH[13]=SH[4];1				# adiabatic 180 inversion, F1 13C
+SH[14]=SH[16];1                         # Calpha high sel. 180 deg, F2, 13C
+SH[15]=SH[17];1                         # Calpha high sel. 90 deg, F2, 13C
+SH[16]=SH[18];1                         # Calpha high sel. 90 deg, F2, 13C, tr off res.
+SH[17]=SH[17];1                         # Calpha high sel. 90 deg, F2, 13C
+SH[18]=SH[11];1                         # Calpha sel. 180 deg, F2, 13C
+SH[19]=SH[10];2				# NH sel.  90 deg, F2 1H
+SH[20]=SH[11];2				# NH sel.  90 deg tr, F2 1H
+SH[21]=SH[15];1                         # Calpha med sel. 180 deg, F1, 13C
+SH[22]=SH[8];1				# Cali sel. 180 deg, F1 13C off
+SH[23]=SH[6];1				# Cali sel.  90 deg, F1 13C
+SH[24]=SH[8];1				# Cali sel. 180 deg, F1 13C
+SH[25]=SH[7];1				# Cali sel.  90 deg tr, F1 13C
+SH[26]=SH[8];1				# Cali sel. 180 deg, F1 13C off
+SH[27]=SH[8];1				# Cali sel. 180 deg, F1 13C off
+SH[28]=SH[11];1				# Calpha sel. 180 deg, F1 13C
+SH[29]=SH[8];1				# Cali sel. 180 deg, F1 13C off
+SH[30]=SH[21];1				# sim Ca+CO 180 deg, F1 13C
+#
+SH[42]=SH[12];2                         # H(N) 180 deg, F2, 1H
+SH[43]=SH[13];2                         # H(N)  90 deg, F2, 1H
+SH[44]=SH[14];2                         # H(N)  90 deg, F2, 1H tr
+#
+#
+#global
+#
+DE=DE;1
+D[16]=D_grad;1                          #
+P[16]=P_grad1;1                         #
+P[17]=P_mlev;1                          #
+P[19]=P_grad2;1                         #
+P[20]=P_mlev;2                          #
+P[28]=P_hsqc;1                          #
+#

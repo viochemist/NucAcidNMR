@@ -5,6 +5,10 @@ Below is a general priority list of experiments to implement. Some can be
 found in the Bruker standard library, but seem complicated to setup. Some
 simplification may be necessary.
 
+The 'prosol' directory includes the pulse/shape/power relationships for
+standard bruker experiments. Ideally, we should use triple_na for most
+of the experiments here, but any are fine.
+
 
 Priorities
 

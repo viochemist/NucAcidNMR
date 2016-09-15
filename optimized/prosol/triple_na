@@ -1,0 +1,134 @@
+#*******************************************************************
+#
+# $Source: /sc/CvsTree/sc/gen/src/prg/lists/prosol/pulseassign/triple_na,v $
+#
+# Copyright (c) 2009
+# Bruker BioSpin GmbH
+# D-76287 Rheinstetten, Germany
+#
+# All Rights Reserved
+#
+#
+# $Id: triple_na,v 1.6.2.1 2014/08/22 12:41:39 tk Exp $
+#
+#*******************************************************************
+#
+#avance-version (14/08/15)
+Version=2.000;
+#
+#pulses
+#
+P[0]=PW90;1				#  90 deg pulse F1, 1H
+P[1]=PW90;1				#  90 deg pulse F1, 1H
+P[2]=PW90*2;1				# 180 deg pulse F1, 1H
+P[3]=PW90;2				#  90 deg pulse F2, 13C
+P[4]=PW90*2;2				# 180 deg pulse F2, 13C
+#P[5]=SQPW[1]*0.66;1			#  60 deg pulse F1, 1H  TOCSY
+P[6]=SQPW[1];1                          #  90 deg pulse F1, 1H, TOCSY
+P[7]=SQPW[7];2				#  90 deg pulse F2, 13C, TOCSY med. sel.
+P[8]=SHPW[4];2				# adiabatic 180 F2, 13C
+P[9]=SQPW[1];2				#  90 deg pulse F2, 13C, TOCSY
+P[10]=SHPW[28];2			# 180 deg sel. F2, 13C, higher sel. Q3(11.4ppm)
+P[11]=SHPW[5];1                         # flip-back pulse, F1, 1H
+P[12]=SHPW[19];1    			# 180 deg sel. F1, 1H, Reburp(2.95ppm)
+P[13]=SHPW[23];2			#  90 deg sel. F2, 13C Q5(41.0ppm)
+P[14]=SHPW[25];2			# 180 deg sel. F2, 13C Q3(22.8ppm)
+P[15]=SHPW[26];2			#  90 deg sel. F2, 13C, higher sel. Q5(20.5ppm)
+#
+P[18]=SHPW[4];1                         # off-res presat, F1, 1H
+#		
+#
+P[21]=PW90;3				#  90 deg pulse F3, 15N or 31P
+P[22]=PW90*2;3				# 180 deg pulse F3, 15N or 31P
+P[23]=SHPW[29];2			# 180 deg sel. F2, 13C, Q3(8.8ppm) twofold mod.
+P[24]=SQPW[9];3				#  90 deg pulse F3, 15N, hetero TOCSY higher sel.
+P[25]=SQPW[8];3				#  90 deg pulse F3, 15N or 31P, hetero TOCSY
+P[26]=SQPW[0];1                         # 90 deg pulse F1, 1H, dec.
+P[27]=PW90;1				# WATERGATE pulse, F1, 1H
+# 
+P[29]=SHPW[6];1                         # flip back pulse 2
+P[30]=SHPW[9];3				# 180 deg sel. F3, 15N, Q3(81ppm)
+P[31]=SHPW[28];2			# C decoupling
+P[32]=SHPW[8];3				# adiabatic 180 F3, 15N
+#
+P[63]=SHPW[12];2                        # 180 deg adiabatic decoupling, F2, 13C
+#
+#decoupling pulses
+#
+PCPD[1]=SQPW[0];1                       # 90 deg pulse F1, 1H, dec.
+PCPD[2]=SQPW[0];2                       # 90 deg pulse F2, 13C, dec.
+PCPD[3]=SQPW[0];3                       # 90 deg pulse F3, 15N, dec.
+PCPD[4]=SQPW[0];4                       # 90 deg pulse F4, 2H, dec.
+#
+# power levels
+#
+#PlW[0];
+PLW[1]=PL90;1                           # high power, F1, 1H
+PLW[2]=PL90;2                           # high power, F2, 13C
+PLW[3]=PL90;3                           # high power, F3, 15N
+PLW[4]=PL90;4                           # high power, F4, 2H
+#
+PLW[9]=SQPL[3];1                        # presat power, F1, 1H
+PLW[10]=SQPL[1];1                       # TOCSY power, F1, 1H
+PLW[11]=SQPL[2];1                       # ROESY power, F1, 1H
+PLW[12]=SQPL[0];2                       # dec. power, F2, 13C
+#
+PLW[15]=SQPL[1];2                       # TOCSY power, F2, 13C
+PLW[16]=SQPL[0];3                       # dec. power, F3, 15N
+PLW[17]=SQPL[0];4                       # dec. power, F4, 2H
+PLW[18]=PL90;1                          # WATERGATE power, F1, 1H
+PLW[19]=SQPL[0];1                       # dec. power, F1, 1H
+PLW[20]=SQPL[7];2			# TOCSY power, higher sel., F2, 13C
+#
+PLW[22]=SQPL[9];3                       # hetero TOCSY power, higher sel., F3, 15N
+PLW[23]=SQPL[8];3			# hetero TOCSY power, F3, 15N or 31P
+PLW[24]=SQPL[14];2                      # HD decoupling, F2
+PLW[25]=SQPL[8];1			# hetero TOCSY power, F1, 1H
+PLW[26]=SQPL[8];2			# hetero TOCSY power, F2, 13C
+PLW[27]=SQPL[9];2			# hetero TOCSY power, higher sel., F2, 13C
+PLW[28]=SHPL[28];2			# C decoupling
+#
+PLW[30]=SQPL[0];2                       # dec. power, F2, 13C (=pl12)
+PLW[31]=SQPL[6];2                       # dec. power, F2, 13C, cw bilev
+PLW[32]=SQPL[12];1                      # presat power low, F1
+#
+PLW[36]=SQPL[6];3                       # dec. power, F2, 15N, cw bilev
+#
+# shapes
+#
+SH[0]=SH[29];2				# sel. 180 deg, F2, 13C, p23
+SH[1]=SH[5];1				# flip-back pulse, F1, 1H
+SH[2]=SH[23];2				# sel.  90 deg, F2, 13C, p13
+SH[3]=SH[25];2				# sel. 180 deg, F2, 13C, p14
+#
+SH[5]=SH[25];2				# sel. 180 deg, F2, 13C, p14
+SH[6]=SH[4];1				# off-res presat, F1, 1H
+SPW[6]=SQPL[3];1                        # presat power, F1
+SH[7]=SH[25];2				# sel. 180 deg, F2, 13C, p14
+SH[8]=SH[24];2				# sel.  90 deg, F2, 13C, tr, p13
+SH[9]=SH[9];3				# sel. 180 deg, F3, 15N, p30
+SH[10]=SH[26];2				# sel.  90 deg higher sel., F2, 13C, p15
+SH[11]=SH[6];1				# flip-back pulse, F1, H
+SH[12]=SH[27];2				# sel.  90 deg higher sel., F2, 13C, tr, p15
+SH[13]=SH[4];2				# adiabatic 180 deg, F2, 13C
+SH[14]=SH[8];3				# adiabatic 180 deg, F3, 15N, p32
+SH[15]=SH[28];2				# sel.dec. 180 deg, F2, 13C, p31
+#
+SH[23]=SH[19];1				# sel. 180 deg, F1, 1H, p12
+SH[24]=SH[19];1				# sel. 180 deg, F1, 1H, p12
+SH[25]=SH[28];2				# sel. 180 deg higher sel., F2, 13C, p10
+#
+SH[31]=SH[12];2                         # adiab. dec., F2, 13C
+#
+#
+#global
+#
+DE=DE;1
+D[16]=D_grad;1                          #
+P[16]=P_grad1;1                         #
+P[17]=P_mlev;1                          #
+P[19]=P_grad2;1                         #
+P[20]=P_mlev;2                          #
+P[28]=P_hsqc;1                          #
+P[33]=P_mlev;3                          #
+#
