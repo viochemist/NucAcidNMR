@@ -1,0 +1,168 @@
+; bsADE.3d
+; TROSY relayed HCCH-COSY experiment for correlating adenine H2/H8 resonances
+; in uniformly 13C-labeled RNA molecules
+; REF Bernd Simon, Katia Zanier, Michael Sattler J. Bio. NMR 2001 in press
+
+; F1 1H 4.7ppm
+; F2 13C 140ppm
+; F3 15N 150ppm
+
+
+#include <Avance.incl>
+#include <Grad.incl>
+
+
+"p16=600u"		; gradient PW
+"d16=300u"		; gradient recovery
+
+"d4=1.25m"		; 1/4J(H,C) RNA aromatic
+"d23=28.4m"		; 4*1/2J(C5,C6) in U and C for C2-C5 and C8-C4/C6 long range COSY transfer
+"d11=7.43m-p16-d16"	; 1/2J(C5,C6) in U and C for suppression of pyrimidine signals
+"d25=2.0m/2-p16-d16"	; 1/8J(C5,C6) for C5<->C6 relayed COSY transfer 
+			; JC5C6=66.5Hz, JC4C5=74.4Hz
+"d24=d4"		; 1/4J(H,C) 
+"d22=d23/2-p16-d16"	; constant time out
+"d20=d23/2-p16-d16-d24"	; constant time back
+"d0=3u"			
+"d12=d22-d11-p17-3u"
+"d13=d22-p17-23u"
+"d10=in10/2-1.27324*p3"  
+;"d5=d23/2-p16-d16-d24+p1-d0-1.2733*p3" ;without p6 on N
+"d5=d23/2-p16-d16-d24+p1-d0-1.2733*p3-p6" ;with p6 on N
+"d26=p3/2-p1/2"
+"d27=p4/2-p2/2"
+"d28=d4-(p16+d16+50u)"
+"d8=p1"
+"d9=p3"
+
+aqseq 312
+
+1 ze
+2 d1 do:f3 do:f2
+  5m 
+3 30m
+4 30m
+5 5m
+6 20u pl1:f1
+  20u pl2:f2
+  20u pl3:f3
+;  20u pl7:f1
+;  (p29 ph0):f1
+  20u pl1:f1
+  (p1 ph0):f1				; H2-C2 and H8-C8 INEPT  transfer
+  d4					; 1.25m
+  (p4 ph0):f2 (d27 p2 ph10)
+  d4
+  (p1 ph11):f1
+  100u UNBLKGRAD
+  p16:gp1
+  d16
+  (p3 ph7):f2				; C2-C5 and C8-C4/C6 INEPT transfer
+  p16:gp4
+  d16
+  d11 pl11:f2
+  (p17:sp11 ph20):f2     		; EBURP2 1500us at 100ppm (-40ppm=-6000Hz) slective 90 on C5 of U and C 
+  3u
+  d12 pl2:f2
+  (p4 ph23):f2
+  p16:gp4
+  d16 pl11:f2
+  d13
+  (p17:sp11 ph1):f2    			; EBURP2 Bloch-Siegert Phasecompensation
+  3u
+  20u pl2:f2
+  (p3 ph21):f2				; C5-C4/C6 and C4/C6-C5 realyed INEPT transfer 	
+  d25
+  p16:gp5
+  d16			
+  (p4 ph23):f2		
+  p16:gp5
+  d16			
+  d25			
+  (p3 ph13):f2		
+     d10				; cs evolution of C2,C4,C5,C6,C8 
+  (p3 ph3):f2 				; C4/C6-C5 and C5-C4/C6 realyed INEPTBACK transfer  
+  d25			
+  p16:gp6
+  d16			
+  (p4 ph0):f2		
+  p16:gp6
+  d16			
+  d25			
+  (p3 ph22):f2				; C5-C2 and C4/C6-C8 INEPTBACK transfer		
+  d0                                    ; id0 CT cs evolution of C2,C8
+  (p6 ph0):f3				; if no 15N decoupling take p6 out and change d5 in header
+  d5
+  p16:gp2*EA
+  d16 pl2:f2
+  (p4 ph0):f2			
+  p16:gp2*-1*EA
+  d16
+  d20                                   ; dd20 CT cs evolution of C2,C8
+  (p1 ph5):f1				; half TROSY BACK tranfser C8-H8, C2-H2
+  d24
+  (p4 ph24):f2 (d27 p2 ph1):f1
+  d24
+  (p3 ph25):f2 (d26 p1 ph4):f1 
+  d4
+  (p4 ph24):f2 (d27 p2 ph0):f1
+  d28
+  p16:gp3         
+  d16 pl12:f2
+  50u BLKGRAD
+  go=2 ph31 cpd2:f2
+  d1 do:f2 wr #0 if #0 zd
+  5m ip5*2 igrad EA
+  lo to 3 times 2 			; E/AE 
+  5m id0				; IN0=IN20 = 1/(2*SWH)
+  5m dd20				; l0 < d20/IN20
+  5m ip24*2
+  5m ip25*2
+  5m ip31
+  5m ip31
+  lo to 4 times l0      		; C8,C2 
+  5m rd0				
+  5m rd20
+  5m ip7
+  5m ip13
+  5m ip21
+  5m ip23
+  lo to 5 times 2			; States-TPPI 
+  5m id10
+  lo to 6 times l10			; C2,C4,C5,C6,C8
+exit
+
+
+ph0=0
+ph1=1
+ph11=1 
+ph10=0					; x add 13C magnetization, y subtract 13C magnetization
+ph3=1 
+ph13= 1 3
+ph23= 0 2
+ph21=0 2 
+ph22=0
+ph4=2
+ph5=3					; y TROSY -y ANTI-TROSY on C2/C8
+ph7=0 2
+ph20= 0 0 2 2
+ph24=0
+ph25=1
+ph31=0 2 
+
+
+;ph10 x Add 13C magnetization, ph10 y subtract 13C magnetization
+;ph5 y TROSY   ph5 -y ANTI-TROSY
+;IN0 =IN20 = 1/(2*SWH)
+;l0 < d20/IN20
+;p1 ,p2  1H hard 90,180 pulses (~11/22us)
+;p3 ,p4  13C hard 90,180 pulses (~13/26us)
+;p6	 15N hard 180 puls (~70us)
+;p17 	 EBURP2 1500us at 100ppm (-40ppm=-6000Hz) slective 90 on C5 of U and C
+;gpz1 70, strength z-gradient 1 zz
+;gpz2 45, strength z-gradient 2 (E/A)
+;gpz3 22.6, strength z-gradient 3 (E/A)
+;gpz4 13, strength z-gradient 4 180  
+;gpz5 -7, strength z-gradient 5 180  
+;gpz6 9, strength z-gradient 6 180  
+

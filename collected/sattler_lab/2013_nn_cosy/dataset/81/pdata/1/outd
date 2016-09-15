@@ -1,0 +1,16 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= guest
+$$ 2012-02-20 11:27:43.025 +0100  guest@pat.nmr.ch.tum.de
+$$ /opt/topspin/data/guest/nmr/anda_18a_stem_CN_PAT/81/pdata/1/outd
+$$ process /opt/topspin3.0/prog/mod/edparproc
+##$CURPLOT= <hplj3p>
+##$CURPRIN= <$hplj3p>
+##$DFORMAT= <normdp>
+##$LAYOUT= <>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##END=

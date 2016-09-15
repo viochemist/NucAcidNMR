@@ -1,0 +1,38 @@
+Pulse Sequence:
+NA_artsy_imSel_fam
+
+Parameters:
+NA_ARTSY_IMSEL_FAM_750
+
+Ref:
+http://spin.niddk.nih.gov/bax/lit/508/384.pdf
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3184849/
+
+*** 3 extra analysis scripts are included:
+get_jnh.py
+fit.com
+couplings.com
+
+*** Run the following scripts in order (after minor edits):
+
+*** conversion (fid.com):
+use NMRPipe 'bruker' command to generate fid.com
+
+- carrier is at 12.2 ppm
+- set indirect axis complex
+- double no. of real/complex points
+
+*** ft (edit ft.com)
+ft.com - put phase corrections
+
+*** peak pick the the reference spectrum (plane z=1, the more intense of the two), assign it and save it as:
+ass.tab
+
+*** run these 2 scripts:
+fit.com
+
+***
+- edit couplings.com to update the noise level of the reference spectrum (from nmrDraw) and run it:
+couplings.com
+
+- will output the couplings as jnh.dat

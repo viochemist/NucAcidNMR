@@ -1,0 +1,84 @@
+;NA_2Dnoepr.nmrfam
+;
+; 2D NOESY pulse sequence with SPFGE during mix
+; Phase-sensitive using States-TPPI
+;
+; Bruker Avance version for Topspin 1.3 or XWIN-NMR 3.5
+; Written by L. Clos, NMRFAM (lclos@nmrfam.wisc.edu)
+;
+;  Disclaimer: This pulse program is provided "as is" for your
+;  information. Support for the use of this pulse program is
+;  provided to users of the National Magnetic Resonance Facility
+;  at Madison (NMRFAM). Users of this pulse program employ it at
+;  their own risk. Neither NMRFAM nor University of Wisconsin-Madison
+;  are liable for any physical or other damage incurred during the
+;  use of this pulse program.
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Nucs.incl>
+
+define delay NOEMIX
+
+"d0=(in0/2)-(p1*4/3.14159)"
+"d9=NOEMIX-p16-d16-d12"
+"d11=30m"
+"d12=20u"
+"d13=3u"
+"d16=200u"
+"d29=d1-p9-d13-d12"
+
+;Pulse sequence starts here
+1 ze
+2 d11 pl9:H             ;set H presaturation power
+  d29                   ;recycle delay
+  (p9*0.8 ph0):H        ;80% presaturation pulse
+  d13 ip0               ;increment presat phase
+  (p9*0.2 ph0):H        ;20% presaturation pulse
+  d12 pl1:H             ;set H hi power
+  (p1 ph1):H            ;H hard 90 to transverse
+  d0                    ;incremental delay
+  (p1 ph2):H            ;H hard 90 to select for -z
+  d9 UNBLKGRAD          ;mix time start, clear gradients
+  p16:gp1               ;mix time gradient
+  d16                   ;mix time gradient recovery delay
+  d12 BLKGRAD           ;block gradients
+  (p1 ph3):H            ;H hard 90 read pulse to transverse
+  d13                   ;duplexer delay
+  go=2 ph31             ;record and loop experiment ns times
+  d11 mc #0 to 2 F1PH(ip1 & rp0, id0)		
+exit
+
+ph0= 0
+ph1= 0 2 0 2 1 3 1 3
+ph2= 0 0 2 2 1 1 3 3
+ph3= 0 0 0 0 1 1 1 1
+ph31=0 2 2 0 1 3 3 1
+
+;pl1 : H channel high power level for 90 pulse              [-6 dB]
+;pl9 : H channel low power level for presat                 [~70 dB]
+;p1  : H channel high power 90 pulse                        [~11 u]
+;p9  : H channel low power presat pulse                     [~0.5 s]
+;p16 : mix time gradient length                             [1.5 m]
+;d0  : incremented delay (2D) =(in0/2)-(p1*4/3.14159)
+;      calculated for easy F1 phasing(PHC0=90,PHC1=-180)
+;d1  : relaxation delay; 1-5 * T1                           [>1 s]
+;d9  : residual NOE mixing time = NOEMIX-gradient
+;d11 : delay for disk r/w                                   [30 m]
+;d12 : power switching delay                                [20 u]
+;d13 : short delay                                          [3 u]
+;d16 : delay for homospoil/gradient recovery                [200 u]
+;d29 : alt relax delay when presat is used = (d1-p9)
+;NOEMIX: NOE mixing time                                    [<500 m]
+;in0 : 1/(1 * SW) = 2*DW
+;nd0 : 1
+;NS  : 8 * n
+;DS  : 8
+;td1 : number of experiments
+;mc2 : States-TPPI, TPPI
+
+;gpz1: mix time gradient (100% = 50g/cm)                    [37%]
+;gpnam1: shape of gradient                                  [sine.100]
+
+;$Id: NA_2Dnoepr.nmrfam,v 1.0 2009/06/06 16:20:00 lclos Exp lclos $
+;FNORD 42

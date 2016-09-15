@@ -1,0 +1,28 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 2	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= gabrielc
+$$ 2012-10-29 01:05:12.023 -0500  gabrielc@telemark
+$$ /opt/topspin3.0/exp/stan/nmr/par/user/NA_ARTSY_CH_FAM/clevels
+$$ process /opt/topspin3.0/prog/mod/edparproc
+##$LEVELS= (0..255)
+-3987817.6224384 -2215454.234688 -1230807.90816 -683782.1712 -379878.984
+-211043.88 -117246.6 -65137 65137 117246.6 211043.88 379878.984 683782.1712
+1230807.90816 2215454.234688 3987817.6224384 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+##$LEVSIGN= 3
+##$MAXLEV= 8
+##$METHOD= 0
+##$NEGBASE= -32568.5
+##$NEGINCR= 1.8
+##$POSBASE= 32568.5
+##$POSINCR= 1.8
+##END=

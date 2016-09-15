@@ -1,0 +1,11 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 1	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= anda
+$$ 2013-02-02 14:29:17.043 +0100  anda@ms17.nmr.ch.tum.de
+$$ /data1/anda/spektren/data/hnrnp_A1_stemregion18a/nmr/anda_18a_stem_CN_PAT/81/pdata/1/assocs
+$$ process /opt/topspin3.0_pat/prog/mod/dataserver
+##$MULTDISP= </data1/anda/spektren/data/hnrnp_A1_stemregion18a/nmr/anda_18a_stem_CN_PAT/75/pdata/1>
+##END=

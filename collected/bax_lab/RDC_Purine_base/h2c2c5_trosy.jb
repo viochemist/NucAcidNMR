@@ -1,0 +1,167 @@
+#include "bits.gmc"
+;HCC(C) TROSY for A  base C4C5 and C5C6 rdc measurement
+;  Boisbouvier, Bryce, O'Neil-Cabello & Bax
+; Starting from H2.
+
+"p22=0.5m"
+
+
+"d2=1.25m"	; J=200 HZ
+"d26=p3-p1"
+"d7=p11*0.5-p8*0.5"
+"d17=p11*0.5-p1"
+"d8=p1*2"
+"d13=d2-p22-5u"
+"d14=d2-p24-5u"
+"d11=50m"
+"d12=1m"
+"d5=18m"     
+"d6=d5-p22-505u"
+"d0=in0*0.5-p3*0.67-p7*2.333-3u"
+"d9=d5-p3-p7*2.333-3u-p26-300u"
+"d10=d5-in10*0.5-p3-p26-300u"
+;"d9=d5-p3-p26-300u"
+;"d10=d5-p3-p26-300u"
+"d20=in20*0.5"
+
+1 ze
+  1m RESET
+  1m
+2     d12
+3     d12 
+4     d12 do:C1
+5     d12 do:N do:H
+6     d12 do:C1 do:C2
+      d12 do:N do:H
+7     1m LOCK_ON
+      d1 do:N do:H
+      1m LOCK_OFF
+      10u pl1:H
+      10u pl3:C1
+; ******************* INEPT ******
+     (p1 ph0):H
+     5u
+     p22:gp2
+     d13
+     (d26 p1*2 ph0):H (p3*2 ph0):C1
+     5u
+     p22:gp2
+     d13  
+     (p1 ph1):H			; + 13C Magnetization on narrow component
+     5u 
+     p20:gp0		;need huge gradient
+     1m pl2:N
+;******************* C2->C5 transfer *****
+     (p3 ph17):C1
+     d6
+     5u
+     p22:gp4
+     500u
+     (p3*2 ph0):C1
+     5u
+     p22:gp4
+     500u pl2:N
+     d6
+;******************* C5 evolution *****
+     (p3 ph10):C1 
+     d20 pl6:C1
+    (p11:sp11 ph0):C1 (d7 p8:sp8 ph0):N (d17 p1*2 ph0):H ;  11m iBurp on C4 or C6
+     d20
+     5u
+     p22:gp5
+     300u pl6:C1
+     (p6:sp6 ph0):C1  ;2m reburp @ 155ppm
+     5u
+     p22:gp5
+     292u pl6:C1
+     (p11:sp11 ph0):C1 (d7 p8:sp8 ph0):N (d17 p1*2 ph0):H ;  11m iBurp on C4 or C6
+     6u     
+     2u pl3:C1
+     (p3 ph11):C1  
+;*********C5 transfer->C2 + C2 evolution *****
+if "l1==2" goto 17
+     d0
+     (p7 ph0):N
+     3u
+     (p7*2.666 ph1):N
+     3u
+     (p7 ph0):N
+     d9 
+     p26:gp26     ; 1m -50%
+     300u
+     (p3*2 ph0):C1
+     5u
+     p26:gp27    ; 1m 50%
+     295u
+     d10
+     (p1 ph1):H
+     goto 18
+17   d0
+     (p7 ph0):N
+     3u
+     (p7*2.666 ph1):N
+     3u
+     (p7 ph0):N
+     d9  
+     p26:gp28    ; 1m 50%
+     300u
+     (p3*2 ph0):C1
+     5u
+     p26:gp29   ; 1m -50%
+     295u
+     d10 
+     (p1 ph3):H
+;--end C evolution
+;--TROSY transfer back
+18     5u
+       p22:gp3
+       d13
+       (d26 p1*2 ph1):H (p3*2 ph0):C1 
+       5u
+       p22:gp3
+       d13       
+       (p1 ph2):H (p3 ph1):C1
+       5u
+       p24:gp24
+       d14 pl30:N
+       (d26 p1*2 ph0):H (p3*2 ph0):C1
+       5u
+       p24:gp25     
+       d14 pl31:C1
+       go=2 ph31 cpd4:C1 cpd2:N
+       1m do:C1  do:N
+       1m LOCK_ON
+       d11 wr #0 if #0 zd
+d12    iu1  
+lo to 3 times 2
+d12*0.5 ru1
+d12*0.25 id0
+d12*0.25 dd10
+lo to 4 times l3 ;NLOOP
+d12*0.25 rd0
+d12*0.25 rd10
+d12*0.25 ip17
+d12*0.25 ip10
+lo to 5 times 2
+d12*0.2 ip17
+d12*0.2 ip17
+d12*0.2 ip10
+d12*0.2 ip10
+d12*0.2 id20
+lo to 6 times l4   
+d12
+d12
+1m RESET
+1m LOCK_ON
+exit
+
+
+
+ph0=0
+ph1=1
+ph2=2 
+ph3=3 
+ph17=0 2
+ph10=1 1 3 3
+ph11=1 1 1 1 3 3 3 3 
+ph31=0 2

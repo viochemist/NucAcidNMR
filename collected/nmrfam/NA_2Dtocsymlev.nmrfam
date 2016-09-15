@@ -1,0 +1,103 @@
+;NA_2Dtocsymlev.nmrfam
+;
+; 2D TOCSY pulse sequence with clean MLEV17 mixing
+; Phase-sensitive using States-TPPI
+;
+; Bruker Avance version for Topspin 1.3 or XWIN-NMR 3.5
+; Written by L. Clos, NMRFAM (lclos@nmrfam.wisc.edu)
+;
+;  Disclaimer: This pulse program is provided "as is" for your
+;  information. Support for the use of this pulse program is
+;  provided to users of the National Magnetic Resonance Facility
+;  at Madison (NMRFAM). Users of this pulse program employ it at
+;  their own risk. Neither NMRFAM nor University of Wisconsin-Madison
+;  are liable for any physical or other damage incurred during the
+;  use of this pulse program.
+
+#include <Avance.incl>
+#include <Nucs.incl>
+
+define delay TOCMIX
+
+"d0=(in0/2)-(p1*4/3.14159)-d12"
+"d11=30m"
+"d12=20u"
+"d13=3u"
+"d20=p6"
+"p5=p6*0.667"
+"p7=p6*2"
+;"TOCMIX=((p6*64+p5)*l1)+p17"
+"l1=(TOCMIX-p17)/(p6*64+p5)"
+
+;Pulse sequence starts here
+1 ze 
+2 d11 pl9:H             ;set H presaturation power
+  d29                   ;recycle delay
+  (p9*0.8 ph0):H        ;80% presaturation pulse
+  d13 ip0               ;increment presat phase
+  (p9*0.2 ph0):H        ;20% presaturation pulse
+  d12 pl1:H             ;set H hi power
+  (p1 ph1):H            ;H hard 90 to transverse
+  d0                    ;incremental delay
+  d12 pl10:f1           ;set H to TOCSY mix power
+  (p17 ph21 d13)        ;trim pulse, start MLEV
+3 (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph22 p7 ph23 p6 ph22)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p6 ph24 p7 ph25 p6 ph24)
+  (p5 ph23)
+  lo to 3 times l1 
+  go=2 ph31
+  d11 mc #0 to 2 F1PH(ip1 & rp0, id0)		
+exit 
+
+ph0= 0  
+ph1= 0 2 2 0 1 3 3 1
+ph21=0 2 0 2 1 3 1 3
+ph22=3 1 3 1 0 2 0 2
+ph23=0 2 0 2 1 3 1 3
+ph24=1 3 1 3 2 0 2 0
+ph25=2 0 2 0 3 1 3 1
+ph31=0 2 2 0 1 3 3 1
+
+;pl1 : H channel high power level for 90 pulse              [-6 dB]
+;pl9 : H channel low power level for presat                 [~70 dB]
+;pl10: H channel low power level for TOCSY mixing           [2 dB]
+;p1  : H channel high power 90 pulse                        [~11 u]
+;p5  : H channel pl10 60 pulse                              [~16 u]
+;p6  : H channel pl10 90 pulse                              [~24 u]
+;p7  : H channel pl10 180 pulse                             [~48 u]
+;p17 : H channel pl10 TOCSY trim pulse                      [800 u]
+;p9  : H channel low power presat pulse                     [~0.5 s]
+;d0  : incremented delay (2D) =(in0/2)-(p1*4/3.14159)
+;      calculated for easy F1 phasing(PHC0=90,PHC1=-180)
+;d1  : relaxation delay; 1-5 * T1                           [>1 s]
+;d11 : delay for disk r/w                                   [30 m]
+;d12 : power switching delay                                [20 u]
+;d13 : short delay                                          [3 u]
+;d16 : delay for homospoil/gradient recovery                [200 u]
+;d29 : alt relax delay when presat is used = (d1-p9)
+;TOCMIX: TOCSY mixing time                      [40-46 m ideal for NA]
+;in0 : 1/(1 * SW) = 2*DW
+;nd0 : 1
+;NS  : 8 * n
+;DS  : 16
+;td1 : number of experiments
+;mc2 : States-TPPI, TPPI
+
+;Note: use second increment for phasing of f2
+
+;$Id: NA_2Dtocsymlev.nmrfam,v 1.0 2009/06/06 16:20:00 lclos Exp lclos $
+;FNORD 42

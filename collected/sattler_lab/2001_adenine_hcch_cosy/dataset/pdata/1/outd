@@ -1,0 +1,15 @@
+##TITLE= Parameter file, XWIN-NMR		Version 2.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##ORIGIN= Bruker Analytik GmbH
+##OWNER= guest
+$$ Thu Oct 16 14:20:05 1997 GMT (UT+0h)  guest
+$$ /u/data/guest/nmr/ritest/1/pdata/1/outd
+##$CURPLOT= <hplj5llr>
+##$CURPRIN= <$hplj5llr>
+##$DFORMAT= <normdp>
+##$LAYOUT= <>
+##$LFORMAT= <normlp>
+##$PFORMAT= <normpl>
+##$SURQMSG= 0
+##END=

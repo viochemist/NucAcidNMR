@@ -1,0 +1,246 @@
+; summary: ARTSY-2D TROSY for measuring base C2H2/C6H6/C8H8 1JCH and 1DCH (Nucleic Acids)
+; date:    Jan. 2012
+; http://spin.niddk.nih.gov/bax/lit/pdf/384.pdf
+; converted to prosol standards G.C. 2011
+
+; best to measure in H2O rather than D2O (see paper)
+
+; set o1 on H2O (e.g. using 'o1calib')
+; set o2p ~147.5 (middle of C2/C6/C8 region)
+
+; !!! optimize d27 for your particular degree of alignment!!!
+
+;$CLASS=HighRes
+;$DIM=2D
+;$TYPE=
+;$SUBTYPE=
+;$COMMENT=
+;$RECOMMEND=y
+
+prosol relations=<triple_na_fam>
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Delay.incl>
+#include <NMRFAM.incl_fam>
+
+;Gradient Pulses
+"PG20=1m"
+"PG22=79u"
+"PG24=251u"
+"PG25=251u"
+"PG26=500u"
+"PG27=500u"
+
+;"d2=1.1m"			; orig., 900MHz
+;"d2=1.121m"			; to get pos. delays @700 MHz where p53 is longer than @900 MHz
+"d2=1.066m"			; shortest to minimize anti-trosy
+"d13=d2-PG22-p53*0.6"
+"d11=50m"
+"d12=20u"
+"d0=p3*0.637"
+
+"d14=d2-PG24-p55*0.5"
+"d15=d14-PG25+PG24"
+
+; optimize d27 to get a null signal in 2nd increment: approx values below:
+
+"d27=4.9m" ;good for iso, needs to be set to ~1/J or ~1/(J+D) on average
+;"d27=4.0m"  ;good for large alignment
+;"d27=4.5m"  ;good for normal alignment
+"d29=p3*4.44"
+"DELTA1=d27-d29*3-80u"
+
+"d3=p53-p55+p51"
+"d4=p53-d3-p3"
+
+;set o1 on H2O! (e.g. using 'o1calib')
+;"cnst60=7.2" ;optimize for detecting upfield signals but leave water unperturbed (leave at 8.1 ppm if none)
+"cnst60=8.1" 
+;"cnst61=7.7" ;optimize for detecting upfield signals but leave water unperturbed (leave at 8.6 ppm if none)
+"cnst61=8.6" 
+;"cnst29=147.5" ; set o2p on your aromatic carbons
+"cnst0=190"
+
+"spoff53=bf1*(cnst60/1000000)-o1"
+"spoff54=bf1*(cnst60/1000000)-o1"
+"spoff55=bf1*(cnst61/1000000)-o1"
+
+1 ze
+  1m
+  1m
+2     10u do:C1 do:N
+      10u
+      d11
+      10u LOCKH_OFF
+      d12
+3     d12*2 do:H
+4     d12*2 do:C1
+5     d12 do:N do:H
+6     d12
+7     1m fq=cnst0(bf ppm):f3 ;fq=cnst29(bf ppm):f2
+      d1 do:N do:H
+      1m UNBLKGRAD
+      10u pl1:H
+      10u pl2:C1
+     (p3 ph0):C1
+     5u
+     PG20:gp1
+     10m
+; **************** INEPT
+10   (p53:sp53 ph0):H
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     d29*2
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+
+   if "l6==1" goto 20
+     (p55:sp55 ph0):H
+     (p3 ph0 p3*2.44 ph1 p3 ph0):C1
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     d29
+   goto 25
+
+ 20  (p55:sp55 ph0):H
+     d29*0.75
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     (p3 ph0 p3*2.44 ph1 p3 ph0):C1
+     d29*0.25
+
+25   5u pl1:H
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     (p53:sp54 ph11):H
+     5u
+     PG20:gp0
+     0.1m pl3:N
+;**************** start C evolution
+    (p3 ph17):C1
+    (p3 ph0 p3*2.44 ph1 p3 ph0):C1
+    d0
+    (p3 ph0 p3*2.44 ph1 p3 ph0):C1
+    10u
+    PG27:gp27*EA
+    90u pl0:C1
+    (center (p51:sp56 ph4):C1 (p21 ph0 p21*2.4 ph1 p21 ph0):N)
+    d0
+    PG26:gp26*EA
+    50u pl1:H
+    50u
+;--end C evolution
+;--Rance Kay transfer back
+       (p53:sp54 ph8):H
+       5u
+       PG22:gp22
+       d13
+       (p55:sp55 ph1):H (p51:sp56 ph6):C1
+       5u
+       PG22:gp22
+       d13 pl2:C1
+       (p53:sp53 ph2):H (d3 p3 ph9):C1
+       10u
+       PG24:gp24
+       d14
+       50u
+       (center (p55:sp55 ph0):H (p3 ph1 p3*2 ph0 p3 ph1):C1)
+       5u pl30:N
+       PG25:gp25
+       d15
+       45u
+       3u BLKGRAMP
+       3u pl14:C1
+       4u
+       go=2 ph31 cpds2:C1 cpd3:N
+       10u do:C1 do:N
+       10u do:N
+       d11 wr #0 if #0 zd
+       10u LOCKH_OFF
+d12 iu6
+lo to 3 times 2
+d12*0.25 ru6
+d12*0.25 ip8
+d12*0.25 ip8
+d12*0.25 igrad EA
+d12 iu1
+lo to 4 times 2
+d12 ru1
+d12*0.25 ip17*2
+d12*0.25 ip31*2
+d12*0.25 id0
+d12*0.25
+lo to 5 times l3	;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (complex points, 2 spectra)
+d12
+d12
+1m
+1m
+exit
+
+
+ph0=0
+ph1=1
+ph2=2
+ph3=3
+ph4=0
+ph6=0
+ph8=1
+ph9=1 1 1 1 3 3 3 3
+ph10=0
+ph11=1 3
+ph17=0 0 2 2
+ph31=0 2 2 0 2 0 0 2
+
+
+;---- NOTES -----
+
+;*** 1H pulses (H=f1, carrier on H2O, 4.773 ppm @ 25C):
+;set o1 on H2O (e.g. using 'o1calib')
+;cnst60: H2/H6/H8 chemical shift (offset, in ppm)		[8.1 ppm]
+;cnst61: H2/H6/H8 chemical shift (offset, in ppm)		[8.6 ppm]
+;p1 = 90 deg (10us) hard 1H pulse @ pl1
+;p53 = H2/H6/H8 selective 90 deg. pulses, (1.736m @700MHz, 1.35m @900MHz)
+;    = 1.62m @ sp53(spnam53 = Eburp2.1000), spoff53=bf1*(cnst60/1000000)-o1
+;		          @ sp54(spnam54 = Eburp2tr.1000), spoff54=bf1*(cnst60/1000000)-o1
+;p55 = H2/H6/H8 selective 180 deg. refoc. pulse (1.736m@700MHz, 1.35m@900MHz)
+;    = 1.62m @ sp55(spnam55 = Reburp.1000), spoff55=bf1*(cnst61/1000000)-o1
+
+;*** 13C pulses (C=f2, carrier @ 147.5ppm):
+;p3 = 90 deg (~12us) 13C pulse @pl2 (f2)
+;p51 = C2/C6/C8 selective 180 deg. refoc. pulse (900u @700MHz, 700u @900MHz)
+;    = 900u @ sp56(spnam56 = Reburp.1000)
+;p61: C13 (f2) 90 deg low power dec on CO (p61=110u@700) @pl14
+;cpd2: aq C' dec program for 13C samples cpdprg2: garp4.p61
+;cnst29: C(aro) chemical shift (offset)				[147.5 ppm]
+;o2p: C(aro) chemical shift (cnst25)
+
+;C  SW = 1/(2*in0)
+;echo-antiecho in C13
+;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (for the pair)
+
+;*** 15N pulses (N=f3, carrier @ 190ppm):
+;p21 = 90 deg (~50us) 15N pulse @pl3
+;cpd3: decoupling according to sequence defined by cpdprg3=garp.p31, p31=128u
+;pcpd3: f3 channel - 90 degree pulse for decoupling sequence @ pl30
+;cnst0 : N(aro) chemical shift (offset, in ppm)			[190 ppm]
+;o3p: N chemical shift (cnst0)
+
+;RECT pulse pairs do not work well on an AVIII
+;gpz0 = +53%  SINE.20
+;gpz1 = +21%  SINE.20
+;gpz22 = +7   sine.10
+;gpz24 = +10%  SINE.20
+;gpz25 = +60%  SINE.20
+;gpz26 = +50%  SINE.20
+;gpz27 = -50%  SINE.20
+;gpz2 = +1.7 (gron2)

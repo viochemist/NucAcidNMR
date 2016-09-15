@@ -1,0 +1,368 @@
+# 1 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+; summary: ARTSY-2D TROSY for measuring base C2H2/C6H6/C8H8 1JCH and 1DCH (Nucleic Acids)
+; date:    Jan. 2012
+; http://spin.niddk.nih.gov/bax/lit/pdf/384.pdf
+; converted to prosol standards G.C. 2011
+
+; set o1 on H2O (e.g. using 'o1calib')
+; set o2p ~143 (middle of C2/C6/C8 region)
+
+; !!! optimize d27 for your particular degree of alignment!!!
+# 11 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+;$CLASS=HighRes
+;$DIM=2D
+;$TYPE=
+;$SUBTYPE=
+;$COMMENT=
+;$RECOMMEND=y
+
+prosol relations=<triple_na_fam>
+
+# 1 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Avance.incl" 1
+;Avance3.incl
+;   for AV III
+;
+;avance-version (07/12/14)
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+# 165 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Avance.incl"
+;$Id: Avance3.incl,v 1.9.8.1 2012/01/31 17:56:17 ber Exp $
+# 20 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam" 2
+
+# 1 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Grad.incl" 1
+;Grad2.incl  -  include file for Gradient Spectroscopy
+;   for TCU3
+;
+;avance-version (07/01/17)
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+
+# 27 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Grad.incl"
+define list<gradient> EA=<EA>
+
+
+# 31 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Grad.incl"
+;$Id: Grad2.incl,v 1.13.8.1 2012/01/31 17:56:17 ber Exp $
+# 21 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam" 2
+
+# 1 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Delay.incl" 1
+;Delay.incl  -  include file for commonly used delays
+;
+;version 00/02/07
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+
+# 9 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Delay.incl"
+;general delays
+
+define delay DELTA
+define delay DELTA1
+define delay DELTA2
+define delay DELTA3
+define delay DELTA4
+define delay DELTA5
+define delay DELTA6
+define delay DELTA7
+define delay DELTA8
+
+define delay TAU
+define delay TAU1
+define delay TAU2
+define delay TAU3
+define delay TAU4
+define delay TAU5
+# 29 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Delay.incl"
+;delays for centering pulses
+
+define delay CEN_HN1
+define delay CEN_HN2
+define delay CEN_HN3
+define delay CEN_HC1
+define delay CEN_HC2
+define delay CEN_HC3
+define delay CEN_HC4
+define delay CEN_HP1
+define delay CEN_HP2
+define delay CEN_CN1
+define delay CEN_CN2
+define delay CEN_CN3
+define delay CEN_CN4
+define delay CEN_CP1
+define delay CEN_CP2
+
+# 48 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Delay.incl"
+;loop counters
+
+define loopcounter COUNTER
+define loopcounter SCALEF
+define loopcounter FACTOR1
+define loopcounter FACTOR2
+define loopcounter FACTOR3
+
+# 58 "/opt/topspin3.2/exp/stan/nmr/lists/pp/Delay.incl"
+;$Id: Delay.incl,v 1.13.8.1 2012/01/31 17:56:17 ber Exp $
+# 22 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam" 2
+
+# 1 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NMRFAM.incl_fam" 1
+;include file for dexter (AVIII console)
+
+# 10 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NMRFAM.incl_fam"
+define pulse PG1
+define pulse PG2
+define pulse PG3
+define pulse PG4
+define pulse PG5
+define pulse PG6
+define pulse PG7
+define pulse PG8
+define pulse PG9
+define pulse PG10
+define pulse PG11
+define pulse PG12
+define pulse PG13
+define pulse PG14
+define pulse PG15
+define pulse PG16
+define pulse PG17
+define pulse PG18
+define pulse PG19
+define pulse PG20
+define pulse PG21
+define pulse PG22
+define pulse PG23
+define pulse PG24
+define pulse PG25
+define pulse PG26
+define pulse PG27
+define pulse PG28
+define pulse PG29
+define pulse PG30
+define pulse PG31
+
+# 23 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam" 2
+
+# 25 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+;Gradient Pulses
+"PG20=1m"
+"PG22=79u"
+"PG24=251u"
+"PG25=251u"
+"PG26=500u"
+"PG27=500u"
+
+;"d2=1.1m"				; orig., 900MHz
+;"d2=1.121m"			; to get pos. delays @700 MHz where p53 is longer than @900 MHz
+"d2=1.066m"				; shortest to minimize anti-trosy
+"d13=d2-PG22-p53*0.6"
+"d11=50m"
+"d12=20u"
+"d0=p3*0.637" 
+
+"d14=d2-PG24-p55*0.5"
+"d15=d14-PG25+PG24"
+# 44 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+; optimize d27 to get a null signal in 2nd increment: approx values below:
+
+"d27=4.9m" ;good for iso, needs to be set to ~1/J or ~1/(J+f4) on average
+;"d27=4.0m"  ;good for large alignment
+;"d27=4.5m"  ;good for normal alignment
+"d29=p3*4.44"
+"DELTA1=d27-d29*3-80u"
+
+"d3=p53-p55+p51"
+"d4=p53-d3-p3"
+# 55 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+;set o1 on H2O! (e.g. using 'o1calib') 
+"cnst60=8.1"
+"cnst61=8.6"
+;"cnst29=142.5"
+"cnst0=190"
+
+"spoff53=bf1*(cnst60/1000000)-o1"
+"spoff54=bf1*(cnst60/1000000)-o1"
+"spoff55=bf1*(cnst61/1000000)-o1"
+
+# 1 "mc_line 65 file /opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam dc-measurement inserted automatically"
+
+    dccorr
+# 65 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+1 ze
+  1m
+  1m
+2     10u do:f2 do:f3
+      10u 
+      d11
+      10u setnmr3^0
+      d12
+3     d12*2 do:f1
+4     d12*2 do:f2
+5     d12 do:f3 do:f1
+6     d12 
+7     1m fq=cnst0(bf ppm):f3 ;fq=cnst29(bf ppm):f2 
+      d1 do:f3 do:f1
+      1m setnmr3|0 setnmr0|34|32|33 ctrlgrad 0
+      10u pl1:f1
+      10u pl2:f2
+     (p3 ph0):f2
+     5u
+     PG20:gp1
+     10m
+; **************** INEPT
+10   (p53:sp53 ph0):f1
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     d29*2
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+# 98 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+   if "l6==1" goto 20
+     (p55:sp55 ph0):f1
+     (p3 ph0 p3*2.44 ph1 p3 ph0):f2
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     d29
+   goto 25
+
+ 20  (p55:sp55 ph0):f1
+     d29*0.75
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     (p3 ph0 p3*2.44 ph1 p3 ph0):f2
+     d29*0.25
+
+25   5u pl1:f1
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     (p53:sp54 ph11):f1
+     5u
+     PG20:gp0
+     0.1m pl3:f3
+;**************** start f2 evolution
+    (p3 ph17):f2
+    (p3 ph0 p3*2.44 ph1 p3 ph0):f2
+    d0
+    (p3 ph0 p3*2.44 ph1 p3 ph0):f2
+    10u
+    PG27:gp27*EA
+    90u pl0:f2
+    (center (p51:sp56 ph4):f2 (p21 ph0 p21*2.4 ph1 p21 ph0):f3)
+    d0
+    PG26:gp26*EA
+    50u pl1:f1
+    50u
+;--end f2 evolution
+;--Rance Kay transfer back
+       (p53:sp54 ph8):f1
+       5u
+       PG22:gp22
+       d13 
+       (p55:sp55 ph1):f1 (p51:sp56 ph6):f2
+       5u
+       PG22:gp22
+       d13 pl2:f2
+       (p53:sp53 ph2):f1 (d3 p3 ph9):f2
+       10u
+       PG24:gp24
+       d14
+       50u
+       (center (p55:sp55 ph0):f1 (p3 ph1 p3*2 ph0 p3 ph1):f2)
+       5u pl30:f3
+       PG25:gp25
+       d15
+       45u
+       3u setnmr0^34^32^33 ctrlgrad 7
+       3u pl14:f2
+       4u 
+       go=2 ph31 cpds2:f2 cpd3:f3
+       10u do:f2 do:f3
+       10u do:f3
+       d11 wr #0 if #0 zd
+       10u setnmr3^0
+d12 iu6
+lo to 3 times 2
+d12*0.25 ru6
+d12*0.25 ip8
+d12*0.25 ip8
+d12*0.25 igrad EA
+d12 iu1
+lo to 4 times 2
+d12 ru1
+d12*0.25 ip17*2
+d12*0.25 ip31*2
+d12*0.25 id0
+d12*0.25
+lo to 5 times l3	;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (complex points, 2 spectra)
+d12
+d12
+1m
+1m
+exit
+# 187 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+ph0=0
+ph1=1
+ph2=2 
+ph3=3
+ph4=0
+ph6=0
+ph8=1
+ph9=1 1 1 1 3 3 3 3
+ph10=0 
+ph11=1 3
+ph17=0 0 2 2
+ph31=0 2 2 0 2 0 0 2
+
+
+;---- NOTES ----- 
+# 203 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+;*** 1H pulses (f1=f1, carrier on H2O, 4.773 ppm @ 25C):
+;set o1 on H2O (e.g. using 'o1calib') 
+;cnst60: H2/H6/H8 chemical shift (offset, in ppm)		[8.1 ppm]
+;cnst61: H2/H6/H8 chemical shift (offset, in ppm)		[8.6 ppm]
+;p1 = 90 deg (10us) hard 1H pulse @ pl1
+;p53 = H2/H6/H8 selective 90 deg. pulses, (1.736m @700MHz, 1.35m @900MHz) 
+;    = 1.736m @ sp53(spnam53 = Eburp2.1000), spoff53=bf1*(cnst60/1000000)-o1
+;		          @ sp54(spnam54 = Eburp2tr.1000), spoff54=bf1*(cnst60/1000000)-o1
+;p55 = H2/H6/H8 selective 180 deg. refoc. pulse (1.736m@700MHz, 1.35m@900MHz)
+;    = 1.736m @ sp55(spnam55 = Reburp.1000), spoff55=bf1*(cnst61/1000000)-o1
+
+;*** 13C pulses (f2=f2, carrier @ 160ppm):
+;p3 = 90 deg (~12us) 13C pulse @pl2 (f2)
+;p51 = f2/C6/C8 selective 180 deg. refoc. pulse (900u @700MHz, 700u @900MHz)
+;    = 900u @ sp56(spnam56 = Reburp.1000)
+;p61: C13 (f2) 90 deg low power dec on CO (p61=110u@700) @pl14 
+;cpd2: aq f2' dec program for 13C samples cpdprg2: garp4.p61
+;cnst29: f2(aro) chemical shift (offset)				[145.9 ppm]
+;o2p: f2(aro) chemical shift (cnst25)
+
+;f2  SW = 1/(2*in0)
+;echo-antiecho in C13
+;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (for the pair)
+# 227 "/opt/topspin3.2/exp/stan/nmr/lists/pp/user/NA_artsy_baseCH_fam"
+;*** 15N pulses (f3=f3, carrier @ 190ppm):
+;p21 = 90 deg (~50us) 15N pulse @pl3
+;cpd3: decoupling according to sequence defined by cpdprg3=garp.p31, p31=128u
+;pcpd3: f3 channel - 90 degree pulse for decoupling sequence @ pl30
+;cnst0 : f3(aro) chemical shift (offset, in ppm)			[190 ppm]
+;o3p: f3 chemical shift (cnst0)
+
+;RECT pulse pairs do not work well on an AVIII
+;gpz0 = +53%  SINE.20
+;gpz1 = +21%  SINE.20
+;gpz22 = +7   sine.10
+;gpz24 = +10%  SINE.20
+;gpz25 = +60%  SINE.20
+;gpz26 = +50%  SINE.20
+;gpz27 = -50%  SINE.20
+;gpz2 = +1.7 (gron2)

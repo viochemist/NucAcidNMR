@@ -1,0 +1,19 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.0
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 129	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= guest
+$$ 2012-02-20 13:45:43.668 +0100  guest@pat.nmr.ch.tum.de
+$$ /opt/topspin/data/guest/nmr/anda_18a_stem_CN_PAT/81/acqu2s
+$$ process /opt/topspin3.0/prog/mod/go
+##$ACQT0= 0
+##$BF1= 60.805578
+##$FnMODE= 5
+##$NUC1= <15N>
+##$O1= 11431.448664
+##$SFO1= 60.817009448664
+##$SW= 109.999670062028
+##$SW_h= 6689.85097351228
+##$TD= 128
+##END=

@@ -1,0 +1,27 @@
+##TITLE= Audit trail, TOPSPIN		Version 3.0
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= anda
+$$ /data1/anda/spektren/data/hnrnp_A1_stemregion18a/nmr/anda_18a_stem_CN_PAT/81/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2012-02-20 13:45:43.800 +0100>,<guest>,<pat.nmr.ch.tum.de>,<go>,<TOPSPIN 3.0>,
+      <created by zg
+	started at 2012-02-20 12:29:26.178 +0100,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       E8 BD CC 6E B7 C0 95 B5 08 64 83 26 03 90 3C C7
+       data hash MD5: 1536 * 128
+       7A 96 C9 B8 10 C2 AF 39 B1 80 6D 95 C4 87 E9 4B>)
+(   2,<2012-03-08 15:21:22.689 +0100>,<anda>,<ms17.nmr.ch.tum.de>,<proc2d>,<TOPSPIN 3.0>,
+      <Start of raw data processing
+       xfb F2: SI = 2K BC_mod = 4 WDW = 4 SSB = 2 FT_mod = 6 PKNL = 1 PHC0 = 197.3875 PHC1 = -188.75 F1: SI = 256 WDW = 4 SSB = 2 FT_mod = 4 PHC0 = 0 PHC1 = 0
+       data hash MD5: 2K * 256
+       4D 55 73 3C BE 9E 45 3B EF 47 41 2C 81 7A D6 6F>)
+(   3,<2012-03-08 15:21:56.205 +0100>,<anda>,<ms17.nmr.ch.tum.de>,<proc2d>,<TOPSPIN 3.0>,
+      <pk1 fgphup F1: PHC0 = 1.466406 PHC1 = 27.1
+       data hash MD5: 2K * 256
+       90 3D 1F 6E 4E 80 7F 7C 72 BE D0 A0 6E 2D E3 12>)
+##END=
+
+$$ hash MD5
+$$ A1 33 71 DD 8A 7A E1 0E 03 CA B0 40 2E 29 C3 1B

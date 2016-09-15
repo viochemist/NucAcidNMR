@@ -1,0 +1,224 @@
+;NA_2DF1fF2fnoe.nmrfam
+;
+; 2D NOESY with F1 and F2 13C filter pulse sequence
+; Gradient coherence selection
+; Phase-sensitive using States-TPPI
+;
+; Bruker Avance version for Topspin 1.3 or XWIN-NMR 3.5
+; Written by L. Clos, NMRFAM (lclos@nmrfam.wisc.edu)
+;
+;  Disclaimer: This pulse program is provided "as is" for your
+;  information. Support for the use of this pulse program is
+;  provided to users of the National Magnetic Resonance Facility
+;  at Madison (NMRFAM). Users of this pulse program employ it at
+;  their own risk. Neither NMRFAM nor University of Wisconsin-Madison
+;  are liable for any physical or other damage incurred during the
+;  use of this pulse program.
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Nucs.incl>
+
+define delay JCHalip
+define delay JCHarom
+define delay NOEMIX
+
+"d0=(in0/2)-(p3*4/3.14159)"
+"d9=NOEMIX-p3-p18-p19-(2*d16)-d13"
+"d11=30m"
+"d12=20u"
+"d13=3u"
+"d16=200u"
+"d29=d1-p9-d13-d12"
+
+;gradient pulses
+"p15=400u"
+"p16=900u"
+"p17=1.1m"
+"p18=3.0m"
+"p19=300u"
+
+;hard 180 pulses 
+"p2=p1*2"
+"p4=p3*2"
+"p6=p5*2"
+
+;delays for J-coupling
+"d2=1/(4*cnst2)"
+"d3=1/(4*cnst3)"
+"JCHalip=d2-p15-d16-d13"
+"JCHarom=d3-p15-d16-d13"
+
+;pulse sequence starts below
+1 ze					
+2 d11 				
+  d12 pl9:H				
+  d12 pl2:C				
+  d12 pl3:N
+  d12 UNBLKGRAD
+  (p9*0.8 ph0):H        ;80% presaturation pulse
+  d13 ip0               ;increment presat phase
+  (p9*0.2 ph0):H        ;20% presaturation pulse
+  d12 pl1:H             ;set H hi power
+;----- first purge - aliphatic -----
+  (p1 ph0):H
+  d13 
+  p15:gp1		    	;g1 gradient
+  d16
+  (center
+    (JCHalip p2 ph0 JCHalip):H
+    (p7:sp7 ph0):C
+    (p6 ph0):N
+  )
+  d13
+  p15:gp1			;g1 gradient
+  d16
+  (p1 ph0):H
+;----- end first purge -----
+  d13
+  p16:gp2			;g2 gradient
+  d16
+;----- second purge - aromatic -----
+  (p1 ph1):H
+  d13 
+  p15:gp1		    	;g1 gradient
+  d16
+  (center
+    (JCHarom p2 ph0 JCHarom):H
+    (p7:sp7 ph0):C
+    (p6 ph0):N
+  )
+  d13
+  p15:gp1			;g1 gradient
+  d16
+  (p1 ph0):H
+;----- end second purge -----
+  d13  
+  p17:gp3			;g3 gradient
+  d16
+  (p1 ph2):H
+;----- t1 incremented delay -----
+  d0
+  (center
+    (p3 ph0 d13 p4 ph10 d13 p3 ph0):C
+    (p6 ph0):N
+  )
+  d0
+  (p1 ph0):H
+;----- tm noesy mix time -----
+  d9
+  p18:gp4			;g4 gradient
+  d16
+  (p3 ph0):C
+  d13
+  p19:gp5			;g5 gradient
+  d16
+;----- first purge - aliphatic -----
+  (p1 ph0):H
+  d13 
+  p15:gp1		    	;g1 gradient
+  d16
+  (center
+    (JCHalip p2 ph0 JCHalip):H
+    (p7:sp7 ph0):C
+    (p6 ph0):N
+  )
+  d13
+  p15:gp1			;g1 gradient
+  d16
+  (p1 ph0):H
+;----- end first purge -----
+  d13
+  p16:gp2			;g2 gradient
+  d16
+;----- second purge - aromatic -----
+  (p1 ph3):H
+  d13 
+  p15:gp1		    	;g1 gradient
+  d16
+  (center
+    (JCHarom p2 ph0 JCHarom):H
+    (p7:sp7 ph0):C
+    (p6 ph0):N
+  )
+  d13
+  p15:gp1			;g1 gradient
+  d16
+  (p1 ph4):H
+;----- end second purge -----
+  d13  
+  p17:gp3			;g3 gradient
+  d16
+  (p1 ph5):H
+;----- aquisition and loops -----
+  3u BLKGRAD
+  go=2 ph31
+  d11 mc #0 to 2 F1PH(ip2 & rp0, id0)		
+exit
+
+
+ph0 = 0
+ph1 = 0 0 0 0  2 2 2 2
+ph2 = 0 0 0 0  0 0 0 0  2 2 2 2  2 2 2 2
+ph3 = 0 0 0 0  0 0 0 0  0 0 0 0  0 0 0 0
+      2 2 2 2  2 2 2 2  2 2 2 2  2 2 2 2
+ph4 = 0
+ph5 = 0 1 2 3
+ph10= 1 3
+ph31= 0 1 2 3  2 3 0 1  2 3 0 1  0 1 2 3
+      2 3 0 1  0 1 2 3  0 1 2 3  2 3 0 1
+
+;p1		:proton high power 90deg pulse length	[11u]
+;p2		:proton high power 180deg pulse length	[22u]
+;p3		:carbon high power 90deg pulse length	[16u]
+;p4		:carbon high power 180deg pulse length	[32u]
+;p5		:nitrogen high power 90deg pulse length	[42u]
+;p6		:nitrogen high power 180deg pulse length	[84u]
+;p7		:WURST shaped pulse length
+;p9		:proton low power presat pulse length	[0.5s]
+;p15		:g1 gradient					[400u]
+;p16		:g2 gradient					[900u]
+;p17		:g3 gradient					[1.1m]
+;p18		:g4 gradient					[3.0m]
+;p19		:g5 gradient					[300u]
+;sp7		:WURST shaped pulse power level
+;pl1		:proton channel high power
+;pl2		:carbon channel high power
+;pl3		:nitrogen channel high power
+;pl9		:proton channel presat low power
+;pl12		:carbon channel decoupling power
+;pl13		:nitrogen channel decoupling power
+;d2		:1/4J(CH) delay for aliphatics
+;d3		:1/4J(CH) delay for aromatics
+;d8		:NOE mixing time					[>50m]
+;d16		:gradient recovery delay			[200u]
+;JCHalip	:aliphatic 1/4J(CH) delay minus gradient
+;JCHarom	:aromatic 1/4J(CH) delay minus gradient
+;cnst2	:J(CH) coupling constant for aliphatics
+;cnst3	:J(CH) coupling constant for aromatics
+;nd0		:2
+;gp1		:g1 gradient strength
+;gp2		;g2 gradient strength
+;gp3		:g3 gradient strength
+;gp4		;g4 gradient strength
+;gp5		:g5 gradient strength
+;NS  : 8 * n
+;DS  : 8
+
+;use gradient ratio:    gp1 : gp2 : gp3 : gp 4 : gp5
+;                        15 :  20 :  23 :  20  :  23
+
+
+
+;use gradient files:
+;gpnam1: SINE.100
+;gpnam2: SINE.100
+;gpnam3: SINE.100
+;gpnam4: SINE.100
+;gpnam5: SINE.100
+
+
+
+;$Id: NA_2DF1fF2fnoe.nmrfam,v 102208 2008/10/22 eng Exp $
+;FNORD 42
+

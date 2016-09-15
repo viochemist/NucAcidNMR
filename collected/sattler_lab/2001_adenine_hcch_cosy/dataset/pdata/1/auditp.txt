@@ -1,0 +1,19 @@
+##TITLE= Audit trail, XWIN-NMR		Version 3.5
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= guest
+$$ /u/data/guest/nmr/mdxist26_13C15Nd/55/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, WHAT)
+(   1,<2005-03-02 18:21:48.93 +0100>,<guest>,<drx500>,
+      <acquisition in progress>)
+(   2,<2005-03-03 18:14:10.15 +0100>,<guest>,<drx500>,
+      <Start of raw data processing
+       bc3 wdw3 ft3 pc3 F3: WDW = 4 SSB = 2 FT_mod = 6 SI = 1024 STSR = 230 STSI = 256 PHC0 = -32.71 PHC1 = 127 F2: SI = 256 F1: SI = 256>)
+(   3,<2005-03-03 18:14:23.08 +0100>,<guest>,<drx500>,
+      <bc2 wdw2 ft2 pc2 F2: WDW = 4 SSB = 2 FT_mod = 4 PKNL = 0 SI = 256 TDoff = -2 TDeff = 140 PHC0 = -90 PHC1 = 180>)
+(   4,<2005-03-03 18:14:35.46 +0100>,<guest>,<drx500>,
+      <bc1 wdw1 ft1 pc1 F1: WDW = 4 SSB = 2 FT_mod = 6 SI = 256 PHC0 = 0 PHC1 = 0>)
+##END=
+
+$$ hash MD5
+$$ BB 4C C6 6D 0C 7F 5D 00 79 24 C8 E2 F2 9A E1 64

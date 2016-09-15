@@ -1,0 +1,18 @@
+##TITLE= Audit trail, TOPSPIN		Version 3.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= gabrielc
+$$ /home/gabrielc/nmr/rna/27/audita.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2013-08-24 21:26:47.274 -0500>,<gabrielc>,<telemark>,<go>,<TOPSPIN 3.2>,
+      <created by zg
+	started at 2013-08-23 14:51:50.380 -0500,
+	POWCHK enabled, PULCHK disabled,
+       configuration hash MD5:
+       52 22 D2 47 C0 71 0E 1E 6F DF 30 CE 04 61 C1 40
+       data hash MD5: 2K * 512
+       37 A6 B9 05 40 1E 02 98 3D C7 56 E1 FA 2A FC 8D>)
+##END=
+
+$$ hash MD5
+$$ 25 E8 D6 13 AB 0D 92 92 88 FA B9 D5 E4 B3 59 3D

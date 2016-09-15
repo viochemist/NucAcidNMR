@@ -1,0 +1,249 @@
+; summary: ARTSY-2D TROSY for measuring 1JC5H5 and 1DC5H5 (Nucleic Acids)
+; date:    Apr. 2013
+; http://spin.niddk.nih.gov/bax/lit/pdf/384.pdf
+; converted to prosol standards G.C. 2013
+;
+; set o1 on H2O (e.g. using 'o1calib')
+; set o2p ~100 ()
+
+;$CLASS=HighRes
+;$DIM=2D
+;$TYPE=
+;$SUBTYPE=
+;$COMMENT=
+;$RECOMMEND=y
+
+prosol relations=<triple_na_fam>
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Delay.incl>
+#include <NMRFAM.incl_fam>
+
+;Gradient Pulses
+"PG20=1.7m"
+"PG22=779u"
+"PG24=631u"
+"PG25=251u"
+"PG26=500u"
+"PG27=500u"
+
+
+"d2=1.2m"
+"d3=d2*0.5-100u"
+"d13=d2-PG22-p57*0.4"
+"d11=50m"
+"d12=20u"
+"d0=3u"
+"d14=d2-PG24-p57*0.4-60u"
+"d15=100u-p3+p1"
+
+"d27=5.8m" ;needs to be set to ~1/J or 1/(J+D) on average, need to get null signal in 2nd incr.
+"d29=p3*4.44"
+"DELTA1=d27-d29*3-80u-p1*1.27"
+
+;set o1 on H2O! (e.g. using 'o1calib')
+"cnst61=4.1"
+"cnst29=100"
+"cnst0=155"
+
+"spoff55=bf1*(cnst61/1000000)-o1"
+
+1 ze
+  1m
+  1m
+2     10u do:C1 do:N
+      10u
+      d11
+      10u LOCKH_OFF
+      d12
+3     d12*2 do:H
+4     d12*2 do:C1
+5     d12 do:N do:H
+6     d12
+7     1m fq=cnst0(bf ppm):f3 fq=cnst29(bf ppm):f2
+      d1 do:N do:H
+      1m UNBLKGRAD
+      10u pl1:H
+      10u pl2:C1
+     (p3 ph0):C1
+     10u
+     PG20:gp1
+     1m
+; **************** INEPT
+10   (p1 ph0):H
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     d29*2
+     5u pl0:H
+     5u gron2
+     DELTA1*0.25
+     10u groff
+
+   if "l6==1" goto 20
+     (p55:sp55 ph0):H
+     (p3 ph0 p3*2.44 ph1 p3 ph0):C1
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     d29
+   goto 25
+
+ 20  (p55:sp55 ph0):H
+     d29*0.75
+     5u
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     (p3 ph0 p3*2.44 ph1 p3 ph0):C1
+     d29*0.25
+
+25   5u pl1:H
+     5u gron2
+     DELTA1*0.25
+     10u groff
+     (p1 ph11):H
+     (p3 ph7):C1
+      3u
+      3u gron3
+      d3
+      94u groff
+     (center (p3*2 ph0):C1 (p1 ph0 p1*2 ph1 p1 ph0):H)
+      3u
+      3u gron3
+      d3
+      94u groff
+     (p3 ph1):C1 ;put the trosy pk on z
+     10m
+     PG20:gp0
+     100u pl3:N
+;**************** start C evolution
+    (p3 ph17):C1
+    (p58:sp58 ph0 p58*2.44:sp58 ph1 p58:sp58 ph0):C1
+    d0
+    (p58:sp58 ph0 p58*2.44:sp58 ph1 p58:sp58 ph0):C1
+    6u
+    PG27:gp27*EA
+    100u pl0:C1
+    (center (p57:sp57 ph4):C1 (p21 ph0 p21*2.4 ph1 p21 ph0):N)
+    d0
+    PG26:gp26*EA
+    50u pl1:H
+    50u pl2:C1
+;--end C evolution
+;--Rance Kay transfer back
+       (p1 ph0):H (p3 ph8):C1
+       5u
+       PG22:gp22
+       d13 pl0:C1
+       (center (p1*2 ph0):H (p57:sp57 ph0):C1)
+       5u
+       PG22:gp22
+       d13 pl2:C1
+       (ralign (p1 ph1):H (p3 ph1):C1)
+       10u
+       PG24:gp24
+       d14
+       50u pl0:C1
+       (center (p1*2 ph0):H (p57:sp57 ph0):C1)
+       10u
+       PG24:gp24
+       d14 pl2:C1
+       50u
+       (p1 ph0):H (p3 ph0):C1
+       5u
+       PG25:gp28
+       d15
+       (p1*2 ph0):H
+       5u
+       PG25:gp25
+       90u pl30:N
+       3u BLKGRAMP
+       3u pl14:C1
+       4u pl30:N
+       go=2 ph31 cpds2:C1 cpd3:N
+       10u do:C1 do:N
+       10u do:N
+       d11 wr #0 if #0 zd
+       10u LOCKH_OFF
+d12 iu6
+lo to 3 times 2
+d12*0.25 ru6
+d12*0.25 ip8
+d12*0.25 ip8
+d12*0.25 igrad EA
+d12 iu1
+lo to 4 times 2
+d12 ru1
+d12*0.25 ip17*2
+d12*0.25 ip31*2
+d12*0.25 id0
+d12*0.25
+lo to 5 times l3	;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (complex points, 2 spectra)
+d12
+d12
+1m
+1m
+exit
+
+
+ph0=0
+ph1=1
+ph2=2
+ph3=3
+ph4=0
+ph6=0
+ph7=(8) 1 1 1 1 5 5 5 5
+ph8=0
+ph10=0
+ph11=1 3
+ph17=0 0 2 2
+ph31=0 2 2 0 2 0 0 2
+
+
+
+;---- NOTES -----
+
+;*** 1H pulses (H=f1, carrier on H2O, 4.773 ppm @ 25C):
+;set o1 on H2O (e.g. using 'o1calib')
+;cnst61: H5 chemical shift (offset, in ppm)			[4.1 ppm]
+;p1 = 90 deg (10us) hard 1H pulse @ pl1
+;p55 = H5 selective 180 deg. refoc. pulse (1.62m@750MHz)
+;    = 1.62m @ sp55(spnam55 = Reburp.1000), spoff55=bf1*(cnst61/1000000)-o1
+
+;*** 13C pulses (C=f2, carrier @ 101.5ppm):
+;p3 = 90 deg (~15us) 13C pulse @pl2 (f2)
+;p58 = 90 deg (~15us) 13C pulse (f2)
+;        15u @ sp58(spnam58 = Squa100.32, spoffs58=5400) - composite to decouple 1JCC
+;p57 = C5 selective 180 deg. refoc. pulse (800u @750MHz)
+;    = 800u @ sp57(spnam57 = Reburp.1000)
+;p61: C13 (f2) 90 deg low power dec on CO (p61=110u@700) @pl14
+;cpd2: aq C' dec program for 13C samples cpdprg2: garp4.p61
+;cnst29: C(aro) chemical shift (offset)				[101.5 ppm]
+
+;C  SW = 1/(2*in0)
+;echo-antiecho in C13
+;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (for the pair)
+
+;*** 15N pulses (N=f3, carrier @ 155ppm):
+;p21 = 90 deg (~50us) 15N pulse @pl3
+;cpd3: decoupling according to sequence defined by cpdprg3=garp.p31, p31=128u
+;pcpd3: f3 channel - 90 degree pulse for decoupling sequence @ pl30
+;cnst0 : N(aro) chemical shift (offset, in ppm)			[155 ppm]
+;o3p: N chemical shift (cnst0)
+
+;RECT pulse pairs do not work well on an AVIII
+; for RT probe use X/Y/Z, for cryoprobe use only Z:
+;gpz0  = (+31/+41/) +21%  SINE.32
+;gpz1  = (+13/+13/)   0%  SINE.32
+;gpz22 = (0/0/)      +9%  sine.10
+;gpz24 = (0/0/)      +7%  SINE.20
+;gpz25 = (+70/+70/) +70%  SMSQ10.32
+;gpz26 = (-75/-75/) -75%  SMSQ10.32
+;gpz27 = (+75/+75/) +75%  SMSQ10.32
+;gpz28 = (-5/-5/)    -5%  SMSQ10.32
+;gpz2  = (0/0/)      +3%  (gron2)
+;gpz3  = (0/0/)     +13%  (gron3)

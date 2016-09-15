@@ -1,0 +1,376 @@
+# 1 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+; summary: ARTSY-2D TROSY for measuring imino 1JNH and 1DNH (Nucleic Acids)
+; date:    Jan. 2012
+; http://spin.niddk.nih.gov/bax/lit/pdf/384.pdf
+; converted to prosol standards G.C. 2011
+
+; !!! d21 must be optimized for depending on iso/aligned sample !!!
+
+;$CLASS=HighRes
+;$DIM=2D
+;$TYPE=
+;$SUBTYPE=
+;$COMMENT=
+;$RECOMMEND=y
+ 
+prosol relations=<triple_na_fam>
+# 1 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Avance.incl" 1
+;Avance3.incl
+;   for AV III
+;
+;avance-version (13/06/17)
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+
+
+# 169 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Avance.incl"
+;$Id: Avance3.incl,v 1.9.8.3 2013/08/30 09:44:49 ber Exp $
+# 17 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam" 2
+
+# 1 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Grad.incl" 1
+;Grad2.incl  -  include file for Gradient Spectroscopy
+;   for TCU3
+;
+;avance-version (07/01/17)
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+
+# 27 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Grad.incl"
+define list<gradient> EA=<EA>
+
+
+# 31 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Grad.incl"
+;$Id: Grad2.incl,v 1.13.8.1 2012/01/31 17:56:17 ber Exp $
+# 18 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam" 2
+
+# 1 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Delay.incl" 1
+;Delay.incl  -  include file for commonly used delays
+;
+;version (13/08/07)
+;
+;$CLASS=HighRes Incl
+;$COMMENT=
+
+# 9 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Delay.incl"
+;general delays
+
+define delay DELTA
+define delay DELTA1
+define delay DELTA2
+define delay DELTA3
+define delay DELTA4
+define delay DELTA5
+define delay DELTA6
+define delay DELTA7
+define delay DELTA8
+define delay DELTA9
+define delay DELTA10
+define delay DELTA11
+define delay DELTA12
+define delay DELTA13
+define delay DELTA14
+define delay DELTA15
+define delay DELTA16
+
+define delay TAU
+define delay TAU1
+define delay TAU2
+define delay TAU3
+define delay TAU4
+define delay TAU5
+define delay TAU6
+define delay TAU7
+define delay TAU8
+define delay TAU9
+# 40 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Delay.incl"
+define delay INCR1
+define delay INCR2
+define delay INCR3
+define delay INCR4
+define delay INCR5
+define delay INCR6
+
+
+;delays for centering pulses
+# 50 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Delay.incl"
+define delay CEN_HN1
+define delay CEN_HN2
+define delay CEN_HN3
+define delay CEN_HC1
+define delay CEN_HC2
+define delay CEN_HC3
+define delay CEN_HC4
+define delay CEN_HP1
+define delay CEN_HP2
+define delay CEN_CN1
+define delay CEN_CN2
+define delay CEN_CN3
+define delay CEN_CN4
+define delay CEN_CP1
+define delay CEN_CP2
+
+
+;loop counters
+# 69 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Delay.incl"
+define loopcounter COUNTER
+define loopcounter SCALEF
+define loopcounter FACTOR1
+define loopcounter FACTOR2
+define loopcounter FACTOR3
+define loopcounter FACTOR4
+define loopcounter FACTOR5
+define loopcounter FACTOR6
+
+
+# 80 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/Delay.incl"
+;$Id: Delay.incl,v 1.13.8.2 2013/08/30 09:44:49 ber Exp $
+# 19 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam" 2
+
+# 1 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NMRFAM.incl_fam" 1
+;include file for telemark (AVIII console)
+
+# 10 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NMRFAM.incl_fam"
+define pulse PG1
+define pulse PG2
+define pulse PG3
+define pulse PG4
+define pulse PG5
+define pulse PG6
+define pulse PG7
+define pulse PG8
+define pulse PG9
+define pulse PG10
+define pulse PG11
+define pulse PG12
+define pulse PG13
+define pulse PG14
+define pulse PG15
+define pulse PG16
+define pulse PG17
+define pulse PG18
+define pulse PG19
+define pulse PG20
+define pulse PG21
+define pulse PG22
+define pulse PG23
+define pulse PG24
+define pulse PG25
+define pulse PG26
+define pulse PG27
+define pulse PG28
+define pulse PG29
+define pulse PG30
+define pulse PG31
+
+# 20 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam" 2
+
+# 22 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+;Gradient Pulses
+"PG20=650u"
+"PG21=977u"
+"PG22=79.5u"	;decoding gradient, optimize for each spectrometer (1us steps)
+"PG23=400u"
+"PG24=570u"
+
+;note that a fast repetition rate can be used: d1=0.6s!
+
+"d0=105u+p21*0.635-p3*2"
+"d11=50m"
+"d25=PG22+100u" 
+"d22=2.75m-PG21-p52*0.5-5u-d25*0.5"
+# 36 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+;!!! change d23 below according to the spect. field and aligned or iso sample !!!
+; d23 is small delta in paper, 1m (iso) or 0.78ms (pf1) @ 900MHz, 0.45m (iso) @ 600MHz
+; optimize it empirically to remove unwanted semi-trosy (broad) peaks
+;"d23=1.28m-PG24-p52*0.5-10u"   ;good for aligned
+"d23=1.4m-PG24-p52*0.5-10u"   ;good for iso
+
+;!!! use this (uncommented) value in couplings.com!!!
+;"d21=10m"	;this gave null for pf1 sample, vary to get a null in 2nd fid!, set to ~1/J or 1/(J+f4)
+"d21=11.6m"	;this gave a null on an isotropic sample, 				
+"d29=p21*4.44"
+"DELTA1=d21-d29*3-80u"
+
+;cnst19: f1(f3) chemical shift (offset, 12.2 ppm)
+;cnst25: C6/f2/C4 (coupled to f3) chemical shift (offset, 160 ppm)
+;cnst30: f3(f1) chemical shift (offset, 155 ppm)
+# 52 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+"cnst19=12.2"
+"cnst25=160"
+"cnst30=155"
+
+# 1 "mc_line 56 file /opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam dc-measurement inserted automatically"
+
+    dccorr
+# 56 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+1       ze
+        1m
+        1m
+2       1m do:f2
+        d11 setnmr3^0
+        2m
+3       3m
+4       3m
+5       3m
+	6       1m fq=cnst19(bf ppm):f1 fq=cnst25(bf ppm):f2 fq=cnst30(bf ppm):f3
+	7       1m
+		10u pl3:f3
+		10u pl0:f1
+		d1
+		1m setnmr3|0 setnmr0|34|32|33 ctrlgrad 0
+		(p21 ph0):f3
+		 10u
+		 PG20:gp1
+		 10m
+	       (p50:sp50 ph0):f1 ;eburp2
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+		d29*2
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+
+	     if "l6==1" goto 20
+	       (p52:sp52 ph0):f1
+	       (p21 ph0 p21*2.44 ph1 p21 ph0):f3
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+		d29
+	     goto 25
+# 96 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+	20     (p52:sp52 ph0):f1
+		d29*0.75
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+	       (p21 ph0 p21*2.44 ph1 p21 ph0):f3
+		d29*0.25
+
+	25      5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+	       (p50:sp51 ph11):f1 ;eburp2-TimeReversed
+		 5u pl0:f1
+		 PG20:gp0
+		 50u pl0:f1
+
+	;*****************************************       
+		if "l1==1" goto 88
+	       (p21 ph17):f3
+		10u
+		PG23:gp6
+		200u pl3:f3
+	       (p21*2 ph17):f3 
+		PG23:gp5
+		goto 89
+# 124 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+	88     (p21 ph7):f3
+		10u
+		PG23:gp5
+		200u pl3:f3
+	       (p21*2 ph7):f3 
+		PG23:gp6
+	89      d0 pl2:f2
+	       (p3 ph0 p3*2 ph1 p3 ph0):f2
+		d0
+	       (p50:sp51 ph2):f1  ;eburp2, time reversed
+		10u
+		PG24:gp2
+		d23
+	       (center (p52:sp52 ph0):f1 (p21*2 ph0):f3)
+		10u
+		PG24:gp2
+		d23
+	       (p50:sp50 ph0):f1
+	       (p21 ph4):f3
+		5u
+		PG21:gp3           
+		d22
+	       (center (d25 p52:sp52 ph0):f1 (p21*2 ph0):f3)
+		5u
+		PG21:gp3
+		d22
+	       (p21 ph0):f3
+		PG22:gp4 
+	999        95u pl14:f2
+		5u setnmr0^34^32^33 ctrlgrad 7 
+	       go=2 ph31 cpds2:f2
+		1m do:f2
+		1m setnmr3^0
+		d11 wr #0 if #0 zd
+		1m iu6
+	       lo to 3 times 2
+		0.5m ru6
+		0.5m iu1
+		1m ip2*2
+		1m ip4*2
+	       lo to 4 times 2
+		600u ip7*2
+		600u ip17*2
+		600u ip31*2
+		600u id0
+		600u ru1
+	       lo to 5 times l3		;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (complex points, 2 spectra)
+		10u rd0
+	1m do:f2
+	1m
+	1m
+	1m
+	1m
+	exit    
+		
+	ph0=0
+	ph1=1
+	ph2=1
+	ph4=1
+	ph5=2
+	ph11=1 3
+	ph7=1 1 0 0 3 3 2 2
+	ph17=1 1 2 2 3 3 0 0
+	ph20=0
+	ph31=1 3 2 0 3 1 0 2
+
+	;---- NOTES ----- 
+
+;*** 1H pulses (f1=f1, carrier @ 12.2 ppm):
+;p1 = 90 deg (10us) hard 1H pulse @ pl1
+;p50 = 1.2m @ sp50(spnam50 = Eburp2.1000), sp51(spnam51 = Eburp2tr.1000) - imino selective 90 deg. pulses (1m @ 900MHz or 1.5m @ 600MHz)
+;p52 = 1.2m @ sp52(spnam52 = Reburp.1000), band selective 180 refocussing pulse (1m @ 900MHz or 1.5m @ 600MHz)
+;cnst19: f1(f3) chemical shift (offset, 12.2 ppm)
+;o1p: f1(f3) chemical shift (cnst19)
+# 199 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+;*** 13C pulses (f2=f2, carrier @ 160ppm):
+;p3 = 90 deg (~12us) 13C pulse @pl2 (f2)
+;p61: C13 (f2) 90 deg low power dec on CO (p61=123u@750) @pl14 
+;cpd2: aq f2' dec program for 13C samples cpdprg2: garp4.p61
+;cnst25: C6/f2/C4 (coupled to f3) chemical shift (offset, 160 ppm)
+;o2p: C6/C2C/4 chemical shift (cnst25)
+
+;*** 15N pulses (f3=f3, carrier @ 155ppm):
+;p21 = 90 deg (~40us) 15N pulse @pl3
+;cnst30: f3(f1) chemical shift (offset, 155 ppm)
+;o3p: f3(f1) chemical shift (cnst30)
+
+;f3  SW = 1/(2*in0)
+;echo-antiecho in N15
+;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (for the pair)
+# 215 "/opt/topspin3.2.5/exp/stan/nmr/lists/pp/user/NA_artsy_imSel_fam"
+;RECT pulse pairs do not work well on an AVIII
+;gpz0 = +41%  SINE.20
+;gpz1 = +31%  SINE.20
+;gpz2 = +28   SINE.20
+;gpz3 = +37%  SINE.20
+;gpz4 = +57%  sine.10
+;gpz5 = -57%  sine.10
+;gpz6 = +57%  sine.10
+;gpz12 = +1.7 (gron12)
+

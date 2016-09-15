@@ -1,0 +1,161 @@
+;NA_2DnoeWG5.nmrfam
+;
+; 2D NOESY with double watergate 5 solvent suppression
+; phase sensitive using States-TPPI
+; frequency shift employed to narrow sweep widths
+;
+; Bruker Avance version for Topspin 1.3 or XWIN-NMR 3.5
+; Written by L. Clos, NMRFAM (lclos@nmrfam.wisc.edu)
+;
+;  Disclaimer: This pulse program is provided "as is" for your
+;  information. Support for the use of this pulse program is
+;  provided to users of the National Magnetic Resonance Facility
+;  at Madison (NMRFAM). Users of this pulse program employ it at
+;  their own risk. Neither NMRFAM nor University of Wisconsin-Madison
+;  are liable for any physical or other damage incurred during the
+;  use of this pulse program.
+
+
+;Frequency shift allows you to center spectrum anywhere in F1 and F2,
+;and significantly narrow the sweep widths required to observe
+;imino protons.
+;Uses a frequency list file in the directory:
+;		<topspin home>/exp/stan/nmr/lists/f1
+;Frq list file is defined in the "ased" window, FQ1LIST param:
+;	1) The first value in the frq list is the 1H base freq, 
+;	   preceeded by capital letter O (e.g. "O 750.13").
+;	2) Set the second value to the desired center of spectrum in f1,
+;	   in Hz (10ppm is good for NA, e.g. "7500.00").
+;	3) Set the third value to water, in Hz (e.g. "3525.47").
+;	4) Set the fourth value to the desired center of spectrum in f2,
+;	   in Hz (10ppm is good for NA, e.g. "7500.00").
+;	5) Set o1 to the desired center of spectrum in f2 (needed for DQD)
+; SW can be reduced in both dimensions:
+; F2SW is optimum @10-11ppm
+; F1SW can likewise be @10-11ppm. However, considering folding from large
+;  upfield signals like 0ppm ref compounds, may want F1SW ~15ppm.
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Nucs.incl>
+
+define delay TAUW
+define delay NOEMIX
+define delay NULL2MAX
+
+
+"d0=(in0/2)-(p1*4/3.14159)"
+"d9=NOEMIX-p16-d16-d12"
+"d11=30m"
+"d12=20u"
+"d13=3u"
+"d16=200u"
+"TAUW=(1s/(NULL2MAX*2))-(p1*0.667)"
+
+;Pulse sequence starts here
+1 ze
+  d11 pl1:H             ;set H hi power
+2 d11
+  d12 fq1:H             ;set to F1 center frq
+  d1                    ;recycle delay
+  (p1 ph1):H            ;H hard 90 to transverse
+  d0                    ;incremental delay
+  (p1 ph2):H            ;H hard 90 to select for -z
+  d9 UNBLKGRAD          ;mix time starts, clear gradients
+  p16:gp1               ;mix time gradient
+  d16 fq1:H             ;gradient recovery, set to HDO frq
+  (p1 ph3):H            ;H hard 90 to transverse
+  d13                   ;short delay, begin watergate 5
+  p19:gp3
+  d16
+  (p1*0.087 ph20):H
+  TAUW
+  (p1*0.206 ph20):H
+  TAUW
+  (p1*0.413 ph20):H
+  TAUW
+  (p1*0.778 ph20):H
+  TAUW
+  (p1*1.491 ph20):H
+  TAUW
+  (p1*1.491 ph22):H
+  TAUW
+  (p1*0.778 ph22):H
+  TAUW
+  (p1*0.413 ph22):H
+  TAUW
+  (p1*0.206 ph22):H
+  TAUW
+  (p1*0.087 ph22):H
+  d16
+  p19:gp3
+  d16
+  p19:gp4
+  d16
+  (p1*0.087 ph20):H
+  TAUW
+  (p1*0.206 ph20):H
+  TAUW
+  (p1*0.413 ph20):H
+  TAUW
+  (p1*0.778 ph20):H
+  TAUW
+  (p1*1.491 ph20):H
+  TAUW
+  (p1*1.491 ph22):H
+  TAUW
+  (p1*0.778 ph22):H
+  TAUW
+  (p1*0.413 ph22):H
+  TAUW
+  (p1*0.206 ph22):H
+  TAUW
+  (p1*0.087 ph22):H
+  d16
+  p16:gp4
+  d16 fq1:H
+  d12 BLKGRAD           ;block gradients
+  go=2 ph31             ;loop experiment ns times
+  d11 mc #0 to 2 F1PH(ip1, id0)
+exit
+
+
+ph1= 0 2 0 2 1 3 1 3 2 0 2 0 3 1 3 1
+ph2= 0 0 2 2 1 1 3 3 2 2 0 0 3 3 1 1
+ph3= 0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3
+ph20=0 0 0 0 1 1 1 1 2 2 2 2 3 3 3 3
+ph21=2 2 2 2 3 3 3 3 0 0 0 0 1 1 1 1
+ph31=0 2 2 0 1 3 3 1 2 0 0 2 3 1 1 3
+
+
+;pl1 : H channel high power level for 90 pulse              [-6 dB]
+;p1  : H channel high power 90 degree pulse                 [11 u]
+;p16 : mix time gradient length                             [1.0 m]
+;p19 : water suppression gradient length                    [800 u]
+;d0  : incremented delay (2D) = in0/2-(4/pi*p1)
+;    :   sets F1 phasing to phc0=90 phc1=-180
+;d1  : relaxation delay; 1-5 * T1                           [1.5 s]
+;d9  : residual NOE mixing time = NOEMIX-gradient
+;d11 : delay for disk r/w                                   [30 m]
+;d12 : power switching delay                                [20 u]
+;d13 : short delay                                          [3 u]
+;TAUW: watergate precession delay = 1/(2*NULL2MAX)
+;NOEMIX: NOE mix time                                       [<500 m]
+;NULL2MAX: null to max signal distance in Hz                [10*bf1]
+;           = (distance from HDO to iminos)
+;in0 : 1/(1 * SW) = 2*DW
+;nd0 : 1
+;NS  : 8 * n
+;DS  : 8
+;td1 : number of experiments
+;mc2 : States-TPPI, TPPI
+
+;gpz1: mix time gradient (100% = 50g/cm)                    [37%]
+;gpz3: water suppresion gradient (100% = 50g/cm)            [29%]
+;gpz4: water suppresion gradient (100% = 50g/cm)            [13%]
+;gpnam1: shape of gradient                                  [sine.100]
+;gpnam3: shape of gradient                                  [sine.100]
+;gpnam4: shape of gradient                                  [sine.100]
+
+; $Id: NA_2DnoeWG5.nmrfam,v 1.0 2009/06/06 16:20:00 lclos Exp lclos $
+; FNORD 42

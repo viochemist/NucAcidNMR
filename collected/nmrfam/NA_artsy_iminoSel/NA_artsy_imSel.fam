@@ -1,0 +1,224 @@
+; summary: ARTSY-2D TROSY for measuring imino 1JNH and 1DNH (Nucleic Acids)
+; date:    Jan. 2012
+; http://spin.niddk.nih.gov/bax/lit/pdf/384.pdf
+; converted to prosol standards G.C. 2011
+
+; !!! d21 must be optimized for depending on iso/aligned sample !!!
+
+;$CLASS=HighRes
+;$DIM=2D
+;$TYPE=
+;$SUBTYPE=
+;$COMMENT=
+;$RECOMMEND=y
+ 
+prosol relations=<triple_na_fam>
+
+#include <Avance.incl>
+#include <Grad.incl>
+#include <Delay.incl>
+#include <NMRFAM.incl_fam>
+
+;Gradient Pulses
+"PG20=650u"
+"PG21=977u"
+"PG22=79.5u"	;decoding gradient, optimize for each spectrometer (1us steps)
+"PG23=400u"
+"PG24=570u"
+
+;note that a fast repetition rate can be used: d1=0.6s!
+
+"d0=105u+p21*0.635-p3*2"
+"d11=50m"
+"d25=PG22+100u" 
+"d22=2.75m-PG21-p52*0.5-5u-d25*0.5"
+
+;!!! change d23 below according to the spect. field and aligned or iso sample !!!
+; d23 is small delta in paper, 1m (iso) or 0.78ms (pf1) @ 900MHz, 0.45m (iso) @ 600MHz
+; optimize it empirically to remove unwanted semi-trosy (broad) peaks
+"d23=1.28m-PG24-p52*0.5-10u"   ;good for aligned
+;"d23=1.6m-PG24-p52*0.5-10u"   ;good for iso
+
+;!!! use this (uncommented) value in couplings.com!!!
+"d21=10m"	;this gave null for pf1 sample, vary to get a null in 2nd fid!, set to ~1/J or 1/(J+D)
+;"d21=11.6m"	;this gave a null on an isotropic sample, 				
+"d29=p21*4.44"
+"DELTA1=d21-d29*3-80u"
+
+;cnst19: H(N) chemical shift (offset, 12.2 ppm)
+;cnst25: C6/C2/C4 (coupled to N) chemical shift (offset, 160 ppm)
+;cnst30: N(H) chemical shift (offset, 155 ppm)
+
+"cnst19=12.2"
+"cnst25=160"
+"cnst30=155"
+
+1       ze
+        1m
+        1m
+2       1m do:C
+        d11 LOCKH_OFF
+        2m
+3       3m
+4       3m
+5       3m
+	6       1m fq=cnst19(bf ppm):f1 fq=cnst25(bf ppm):f2 fq=cnst30(bf ppm):f3
+	7       1m
+		10u pl3:N
+		10u pl0:H
+		d1
+		1m UNBLKGRAD
+		(p21 ph0):N
+		 10u
+		 PG20:gp1
+		 10m
+	       (p50:sp50 ph0):H ;eburp2
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+		d29*2
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+
+	     if "l6==1" goto 20
+	       (p52:sp52 ph0):H
+	       (p21 ph0 p21*2.44 ph1 p21 ph0):N
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+		d29
+	     goto 25
+
+	20     (p52:sp52 ph0):H
+		d29*0.75
+		5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+	       (p21 ph0 p21*2.44 ph1 p21 ph0):N
+		d29*0.25
+
+	25      5u
+		5u gron12
+		DELTA1*0.25
+		10u groff
+	       (p50:sp51 ph11):H ;eburp2-TimeReversed
+		 5u pl0:H
+		 PG20:gp0
+		 50u pl0:H
+
+	;*****************************************       
+		if "l1==1" goto 88
+	       (p21 ph17):N
+		10u
+		PG23:gp6
+		200u pl3:N
+	       (p21*2 ph17):N 
+		PG23:gp5
+		goto 89
+
+	88     (p21 ph7):N
+		10u
+		PG23:gp5
+		200u pl3:N
+	       (p21*2 ph7):N 
+		PG23:gp6
+	89      d0 pl2:C
+	       (p3 ph0 p3*2 ph1 p3 ph0):C
+		d0
+	       (p50:sp51 ph2):H  ;eburp2, time reversed
+		10u
+		PG24:gp2
+		d23
+	       (center (p52:sp52 ph0):H (p21*2 ph0):N)
+		10u
+		PG24:gp2
+		d23
+	       (p50:sp50 ph0):H
+	       (p21 ph4):N
+		5u
+		PG21:gp3           
+		d22
+	       (center (d25 p52:sp52 ph0):H (p21*2 ph0):N)
+		5u
+		PG21:gp3
+		d22
+	       (p21 ph0):N
+		PG22:gp4 
+	999        95u pl14:C
+		5u BLKGRAMP 
+	       go=2 ph31 cpds2:C
+		1m do:C
+		1m LOCKH_OFF
+		d11 wr #0 if #0 zd
+		1m iu6
+	       lo to 3 times 2
+		0.5m ru6
+		0.5m iu1
+		1m ip2*2
+		1m ip4*2
+	       lo to 4 times 2
+		600u ip7*2
+		600u ip17*2
+		600u ip31*2
+		600u id0
+		600u ru1
+	       lo to 5 times l3		;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (complex points, 2 spectra)
+		10u rd0
+	1m do:C
+	1m
+	1m
+	1m
+	1m
+	exit    
+		
+	ph0=0
+	ph1=1
+	ph2=1
+	ph4=1
+	ph5=2
+	ph11=1 3
+	ph7=1 1 0 0 3 3 2 2
+	ph17=1 1 2 2 3 3 0 0
+	ph20=0
+	ph31=1 3 2 0 3 1 0 2
+
+	;---- NOTES ----- 
+
+;*** 1H pulses (H=f1, carrier @ 12.2 ppm):
+;p1 = 90 deg (10us) hard 1H pulse @ pl1
+;p50 = 1.2m @ sp50(spnam50 = Eburp2.1000), sp51(spnam51 = Eburp2tr.1000) - imino selective 90 deg. pulses (1m @ 900MHz or 1.5m @ 600MHz)
+;p52 = 1.2m @ sp52(spnam52 = Reburp.1000), band selective 180 refocussing pulse (1m @ 900MHz or 1.5m @ 600MHz)
+;cnst19: H(N) chemical shift (offset, 12.2 ppm)
+;o1p: H(N) chemical shift (cnst19)
+
+;*** 13C pulses (C=f2, carrier @ 160ppm):
+;p3 = 90 deg (~12us) 13C pulse @pl2 (f2)
+;p61: C13 (f2) 90 deg low power dec on CO (p61=123u@750) @pl14 
+;cpd2: aq C' dec program for 13C samples cpdprg2: garp4.p61
+;cnst25: C6/C2/C4 (coupled to N) chemical shift (offset, 160 ppm)
+;o2p: C6/C2C/4 chemical shift (cnst25)
+
+;*** 15N pulses (N=f3, carrier @ 153ppm):
+;p21 = 90 deg (~40us) 15N pulse @pl3
+;cnst30: N(H) chemical shift (offset, 155 ppm)
+;o3p: N(H) chemical shift (cnst30)
+
+;N  SW = 1/(2*in0)
+;echo-antiecho in N15
+;l3 = nr. of increments in each spectrum, 1 td = 4*l3 (for the pair)
+
+;RECT pulse pairs do not work well on an AVIII
+;gpz0 = +41%  SINE.20
+;gpz1 = +31%  SINE.20
+;gpz2 = +28   SINE.20
+;gpz3 = +37%  SINE.20
+;gpz4 = +57%  sine.10
+;gpz5 = -57%  sine.10
+;gpz6 = +57%  sine.10
+;gpz12 = +1.7 (gron12)
+

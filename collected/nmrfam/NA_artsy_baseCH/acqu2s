@@ -1,0 +1,22 @@
+##TITLE= Parameter file, TOPSPIN		Version 3.2
+##JCAMPDX= 5.0
+##DATATYPE= Parameter Values
+##NPOINTS= 513	$$ modification sequence number
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= gabrielc
+$$ 2013-08-24 21:26:46.837 -0500  gabrielc@telemark
+$$ /home/gabrielc/nmr/rna/27/acqu2s
+$$ process /opt/topspin3.2/prog/mod/go
+##$ACQT0= 0
+##$BF1= 188.660571
+##$FnMODE= 5
+##$NUC1= <13C>
+##$NusJSP= 0
+##$NusT2= 1
+##$NusTD= 512
+##$O1= 27355.782795
+##$SFO1= 188.687926782795
+##$SW= 23.6596256602295
+##$SW_h= 4464.28571428571
+##$TD= 512
+##END=

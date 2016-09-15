@@ -1,0 +1,10 @@
+;Nucs.incl  
+;Spectrometer = 750 Avance-AQS w/ TXI Croprobe w/ lockswitch
+;edit logical channels (f1,f2,etc.) per spectrometer hard wiring
+;DO NOT change nucleus letters! -needed for NMRFAM sequences
+;edited by L. Clos 20090606
+
+#define H f1
+#define C f2
+#define N f3
+#define D f4

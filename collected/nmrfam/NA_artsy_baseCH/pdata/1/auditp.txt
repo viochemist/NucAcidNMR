@@ -1,0 +1,17 @@
+##TITLE= Audit trail, TOPSPIN		Version 3.2
+##JCAMPDX= 5.01
+##ORIGIN= Bruker BioSpin GmbH
+##OWNER= gabrielc
+$$ /home/gabrielc/nmr/rna/27/pdata/1/auditp.txt
+##AUDIT TRAIL=  $$ (NUMBER, WHEN, WHO, WHERE, PROCESS, VERSION, WHAT)
+(   1,<2013-08-23 14:51:50.380 -0500>,<gabrielc>,<telemark>,<go>,<TOPSPIN 3.2>,
+      <acquisition in progress>)
+(   2,<2013-08-24 00:37:39.789 -0500>,<gabrielc>,<telemark>,<proc2d>,<TOPSPIN 3.2>,
+      <Start of raw data processing
+       xfb n F2: SI = 2K BC_mod = 6 BCFW = 1 WDW = 4 SSB = 2.5 FT_mod = 6 PKNL = 1 PHC0 = 288.86 PHC1 = 0 F1: SI = 1K WDW = 4 SSB = 2.5 FT_mod = 4 PH_mod = 2
+       data hash MD5: 2K * 1K
+       F1 4B 3B 81 EE FB 5D 3E EC 91 DC 2B 0B 02 59 BA>)
+##END=
+
+$$ hash MD5
+$$ 98 5D 9E B0 5B 1F 9E AD CF 0B F0 1E 46 AE 95 F9

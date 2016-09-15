@@ -1,0 +1,61 @@
+Pulse Sequence:
+NA_artsy_C5H5_fam
+
+Parameters:
+NA_ARTSY_C5H5_FAM
+
+Ref:
+http://spin.niddk.nih.gov/bax/lit/508/384.pdf
+http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3184849/
+
+*** 3 extra analysis scripts are included:
+get_jch.py
+fit.com
+couplings.com
+
+*** Run the following scripts in order (after minor edits):
+
+*** conversion (fid.com):
+use NMRPipe 'bruker' command to generate fid.com
+
+- carrier is on water (4.773p @ 25C)
+- set indirect axis complex
+- double no. of real/complex points
+
+*** ft (edit ft.com)
+
+ft.com - put phase corrections
+
+*** peak pick the the reference spectrum (plane z=1, the more intense of the two), assign it and save it as 'ass.tab'
+
+
+ass.tcl
+
+GDB/TCL read table file ass.tab:
+ 25 variables, 51 entries.
+GDB/TCL read table file unass.tab:
+ 25 variables, 135 entries.
+Residue C19: No match!
+Matched to C7 but overlaps with previously matched U8
+Matched to G39 but overlaps with previously matched C3
+Matched to C38 but overlaps with previously matched U14
+Matched to G27 but overlaps with previously matched U37
+Matched to A36 but overlaps with previously matched A18
+Residue G2: No match!
+
+List of succesful (unique) assignments:
+ 2 4 7 9 11 26 30 32 36 37 49 56 62 69 73 76 81 82 83 84 89 89 91 91 93 93 95 97 100 101 103 104 106 108 111 113 114 115 116 119 119 121 123 123 124 126 128 130 133
+
+Total succesful (unique) assignments: 49
+
+*** run these as is:
+
+fit.com
+
+***
+- edit couplings.com to update the noise level of the reference spectrum (from nmrDraw) and run it:
+couplings.com
+- will output the couplings as jdC5H5.dat
+
+*** check largest and smallest RDC:
+sort -n -k2 jdC5H5.dat

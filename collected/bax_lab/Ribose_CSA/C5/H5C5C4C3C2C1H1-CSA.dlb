@@ -1,0 +1,192 @@
+#include "bits.nt"
+
+; H5'-C5'-C4'-C3'-C2'-C1'-H1' experiment for RNA
+; C5' CS recorded in t1, C1' in t2, H1' in t3
+; DLB and AB Oct 20 2004
+
+;modified DLB Nov 1 2004 quadrature on ph10
+;modified DLB Nov 5 2004 remove C4' shaped pulse and allow 3/2J evolution in t1
+;modified DLB Nov 10 2004 add gradients in t1 and in first relay and add 1H 90
+
+;p1 = 90 deg (10us) 1H pulse @pl1
+;p3 = 90 deg 13C pulse @pl3
+
+;"p22=0.5m"
+
+
+"d2=1.4m"
+"d26=p3-p1"
+"d25=d26*0.5"
+"d13=d2-p22-p3"                             
+"d14=d2-p23-p3"                             
+"d16=0.5m-p24"
+"d17=0.5m-p25"
+"d18=p3-p1"                                 
+"d11=50m"
+"d12=1m"
+"d0=3u+1.5m"
+;"d5=5.5m"
+"d5=17.21m"                   ;half the C1' evolution period (17.21 ms or 5.5ms)
+"d6=d5-p1*2-d0"
+"d10=d5"
+"d3=0.9m"                       
+"d20=3u"                             
+;"d21=12.5m+3u"
+"d21=17.01m+3u"               ;for 3/2J evolution  change from 17.21 to 17.01 - gradients 
+"d22=p6*0.5-p1"    
+"d15=p1*2"
+"d19=p16"
+"d23=d21+3u-0.83m-p1*2-3u"
+
+1 ze
+  1m RESET
+2     1m
+3     d12 do:H
+4     d12 do:C1
+      d12
+5     d12 do:N do:H
+6     d12 do:C1 do:C2
+7     1m LOCK_ON
+      d1 do:N do:H
+      1m LOCK_OFF
+      10u pl1:H
+      10u pl3:C1
+      (p3 ph0):C1          ; eliminate 13C Boltzmann
+      5u
+      p23:gp0
+      5m
+;-----------------INEPT H5' H5'' to C5' -----------
+     (p1 ph0):H
+     9u     
+     p21:gp21
+     d3
+     (d22 p1*2 ph1):H (p6:sp0 ph1):C1  ;(p3*2 ph1):C1   ; shaped pulse on C5'
+     6u
+     3u pl3:C1
+     p21:gp21
+     d3
+     (p1 ph1):H
+     3u     
+     p20:gp20
+     200u
+     (p3 ph10):C1  ; HzCy5'
+;----------------- start C5' evolution -------------
+
+     (0.83m d20 p1*2 ph0):H 
+     d23
+     50u
+     p18:gp18   ;100u
+     50u
+     (p3*2 ph10):C1
+     50u
+     p18:gp18   ;100u
+     50u
+     3u
+     d21
+     (p3 ph0):C1 (p1 ph0):H    
+;-----------------relay------------------------
+     6.0m
+     25u
+     p19:gp19  ; 200u
+     25u
+     (p3*2 ph13):C1
+     25u
+     p19:gp19   ; 200u
+     25u
+     6.0m
+     (p3 ph13):C1       
+     6.25m
+     (p3*2 ph13):C1
+     6.25m
+     (p3 ph13):C1        
+     6.25m
+     (p3*2 ph13):C1
+     6.25m pl30:N
+     (p3 ph17):C1        
+;----------------------start C1' evolution -----
+     d0 cpd1:N
+     (p1*2 ph0):H                 
+     d6
+     if "l1==2" goto 27
+     6u
+     p26:gp26
+     194u
+     (p3*2 ph0):C1
+     p26:gp28
+     200u
+goto 26
+27   6u
+     p26:gp28
+     194u
+     (p3*2 ph0):C1
+     p26:gp26
+     200u
+26   d10
+;--end C evolution
+;--Rance Kay transfer back
+       (p3 ph9):C1 (d25 p1 ph0):H
+       2u do:N
+       p22:gp22
+       d13
+       (d18 p1*2 ph0):H (p3*2 ph7):C1       ;(p15:sp14 ph7):C1
+       2u
+       p22:gp22
+       d13
+       (d25 p1 ph1 d25):H (p3 ph18):C1
+       2u
+       p23:gp23
+       d14
+       (d18 p1*2 ph0):H (p3*2 ph0):C1          ;(p15:sp14 ph0):C1
+       2u
+       p23:gp23
+       d14
+       (d25 p1 ph0):H 
+       4u
+       p24:gp24       ;coherence decoding gradient  0.20218m 60%
+       d16
+       (p1*2 ph0):H
+       2u
+       p25:gp25       ;coherence decoding gradient  0.30218m -60%
+       d17 pl31:C1
+       (2u ph0)
+       go=2 ph31 cpds4:C1
+       1m do:C1
+       1m LOCK_ON
+       d11 wr #0 if #0 zd
+d12*0.25 ip9
+d12*0.25 ip9
+d12*0.5  iu1
+lo to 3 times 2
+d12*0.25 id0
+10u ru1
+d12*0.25 dd10
+lo to 4 times l3 ;C1' LOOP
+10u ip10
+10u rd0
+10u rd10
+lo to 4 times 2
+10u id20
+10u dd21
+10u ip31
+10u ip31
+lo to 4 times l4  ;C5' LOOP
+
+d12
+d12
+1m RESET
+1m LOCK_ON
+exit
+
+
+ph0=0
+ph1=1
+ph2=2
+ph3=3 
+ph7=(360)3
+ph9=2  
+ph10=0 2  
+ph13=0
+ph17=0
+ph18=1
+ph31=0 2 
+

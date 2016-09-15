@@ -1,0 +1,164 @@
+#include "bits.nt"
+; TROSY-ECOSY for C and U bases rdc measurements :
+;   Boisbouvier J, Bryce DL, O'neil-Cabello E, Nikonowicz EP, Bax A
+;  Resolution-optimized NMR measurement of (1)D(CH), (1)D(CC) and (2)D(CH) residual dipolar couplings in nucleic acid bases.
+;  J Biomol NMR. 2004 Nov;30(3):287-301.
+;  with homonuclear decoupling : 
+;   Boisbouvier, Delaglio & Bax (2003); Proc Natl Acad Sci USA 100, pp2369-2373.
+; Depending on the frequency where shape pulses 4,5,6 &12 are applied
+; the following coupling can be measured :
+; C6-C5 & H6-C5
+; C5-C6 & H5-C6
+; C5-C4 & H5-C4
+; C5-H5
+; C6-H6
+
+
+"d11=50m"
+"d2=1.39m"    ; JCH=180Hz
+"d10=d2-p21-p3-5u"
+"d22=d2-p22-p6*0.5-5u"
+"d12=d2-p22-p6*0.5-p4*0.5-5u"
+"d13=d2-p23-p6*0.5-p4*0.5-5u"
+"d24=0.6m-p24-p4*0.5+p1*0.137-5u"
+"d25=0.6m-p25-5u"
+
+"d16=p6*0.5-p1"
+"d26=p3-p1"
+"d4=p4*0.5-p1*0.5"
+"d7=p5*0.5-p7"
+
+"d5=18m"     ; 1/2 CT delay in 1H indirect dimension
+"d20=3u"
+"d14=d5-p24-305u-p4*0.5+p1*0.137"
+"d21=d5-5u"
+"d18=p8*0.5+6u+p1-p5*0.5"
+"d19=p8*0.5+6u+p1-p7"
+
+"d0=in0*0.5-p3*0.32"
+
+
+1       ze
+        1m RESET
+        d11 do:N
+2       1m
+3       1m
+4       1m
+5       1m
+6       1m do:N
+7       5u do:C1
+        d1 LOCK_ON
+        1m LOCK_OFF
+        10u pl1:H
+        10u pl3:C1
+        10u pl5:C2
+        10u pl7:N
+;------- start INEPT -----------------------
+        (p1 ph0):H
+        5u 
+        p21:gp21
+        d10
+        (d26 p1*2 ph0):H (p3*2 ph0):C1
+        5u
+        p21:gp21
+        d10
+        (p1 ph1):H        ; + 13C Magnetization on narrow component
+        5u
+        p20:gp20
+        1m 
+        (p3 ph7):C1
+;------- start 13C TROSY evolution -----------------------
+        d0
+        (p5:sp5 ph0):C2 (d7 p7*2 ph0):N
+        d0
+        if "l1==2" goto 26 
+         250u  pl6:C1        
+         (p12:sp12 ph12):C1
+         5u
+         p27:gp27                
+         goto 27
+26       250u pl6:C1          
+         (p12:sp12 ph12):C1
+         5u
+         p27:gp28                
+27       240u pl1:H
+         if "l1==2" goto 36 
+        5u
+;------- start TROSY Transfer -----------------------
+        (p1 ph1):H            ; for narow component       
+        goto 37
+36      5u
+        (p1 ph3):H             
+37      5u
+        p22:gp22
+        d22 
+        (d16 p1*2 ph1):H (p6:sp6 ph0):C1
+        5u
+        p22:gp22
+        d12
+        (d4 p1 ph2):H (p4:sp4 ph1):C1    
+        5u
+        p23:gp23           
+        d13
+        (d16 p1*2 ph0):H (p6:sp6 ph0):C1
+        5u 
+        p23:gp23
+        d13 pl7:N
+        if "l1==2" goto 46
+        (p4:sp4 ph0):C1               
+        goto 47
+46      (p4:sp4 ph2):C1               
+;------- start 1H-1H homodecoupling -----------------------
+47   d20
+     2u
+     p24:gp24
+     300u  pl3:f4
+     (p1*2 ph0):f1
+     6u pl8:f1
+     (p8:sp8 ph11):f1 (d18 p5:sp5 ph0):C2 (d19 p7*2 ph0):f2
+     6u
+     d14
+     5u
+     p24:gp25     ;251.2u @ 50z
+     300u
+     (p8:sp8 ph0):f1
+     5u
+     p24:gp26     ;251.2u @ -50z
+     300u pl1:f1
+     d21   
+    if "l2==1" goto 99
+    10u pl1:f1
+    (p1*2 ph0):f1
+99   5u
+        go=2 ph31  ;cpd2:C1
+        10u do:N
+        1m LOCK_ON
+        d11 wr #0 if #0 zd
+
+1m iu1
+lo to 2 times 2
+0.5m ru1
+0.5m id0
+lo to 3 times l3
+0.5m iu2
+0.5m rd0
+lo to 4 times 2
+0.25m id20
+0.25m dd21
+0.5m ru2 
+lo to 5 times l4
+1m do:C1
+1m do:N
+1m RESET
+1m
+exit    
+        
+ph0=0
+ph1=1
+ph2=2
+ph3=3
+ph7=1
+ph11=0 0 1 1
+ph12=0 1
+ph31=0 2 2 0
+
