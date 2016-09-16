@@ -17,18 +17,42 @@ both Varian/Agilent or Bruker sequences. The *optimized* directory will contain
 those sequences that have been optimized for Bruker spectrometers and made to 
 conform to the following conventions:
 
- - Bruker pulse, power, and delay naming conventions with the appropriate choice
- of prosol relations
- 
- - Compatible with latest patch levels of Topspin 3.2 and above (roughly Avance II and later)
- 
- - Internal calculations must be field independent
- 
- - All necessary non-conventional pulses, decoupling, etc must be provided
- 
- - No additional 'include' files may be used
- 
- - Avoid spaces and dashes in any file/directory naming, only use underscore ( _ )
+- Bruker pulse, power, and delay naming conventions with the appropriate choice of prosol relations
+- Compatible with latest patch levels of Topspin 3.2 and above (roughly Avance II and later)
+- Internal calculations must be field independent
+- All necessary non-conventional pulses, decoupling, etc must be provided
+- No additional 'include' files may be used
+- Avoid spaces and dashes in any file/directory naming, only use underscore ( _ )
+- All sequences should be well documented
+  - Header - references, initialled/dated change list, any special setup instructions
+  - Safety checks - after "1 ze" and before the experiment starts, check validity of crucial parameters
+
+	```
+	1 ze
+	
+	  if "d1 < 0.5" {
+	    2u
+	    print "error: D1 too short"
+	    goto HaltAcqu
+	  }
+	  ...
+	
+	2 d11
+	  ...
+	  < experiment code >
+	  ...
+	
+	  go=2 ...
+	  d11 do:f# ...
+	  d11 mc ...
+	  d11 BLKGRAD
+	  
+	HaltAcqu, d11
+	exit
+	```
+      
+  - Sequence - comment blocks of code (Hx -> HyCz, INEPT, CS Encode, etc.)
+  - Footer - all parameters listed (ie. ;p10 : describe), any special processing instructions
  
 Organization within these directories is still to be determined. In general, pulse
 sequences should be 90% complete with a simple 'getprosol' command. Whenever this
