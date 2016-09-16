@@ -25,6 +25,15 @@ conform to the following conventions:
 - All sequences should be well documented
   - Header - references, initialled/dated change list, any special setup instructions
   - Safety checks - after "1 ze" and before the experiment starts, check validity of crucial parameters
+  - Sequence - comment blocks of code (Hx -> HyCz, INEPT, CS Encode, etc.)
+  - Footer - all parameters listed (ie. ;p10 : describe), any special processing instructions
+ 
+Organization within these directories is still to be determined. In general, pulse
+sequences should be 90% complete with a simple 'getprosol' command. Whenever this
+isn't possible, python or au macros should be provided. 
+
+### Example Safety Check
+
 	```
 	1 ze
 	
@@ -48,12 +57,6 @@ conform to the following conventions:
 	HaltAcqu, d11
 	exit
 	```
-  - Sequence - comment blocks of code (Hx -> HyCz, INEPT, CS Encode, etc.)
-  - Footer - all parameters listed (ie. ;p10 : describe), any special processing instructions
- 
-Organization within these directories is still to be determined. In general, pulse
-sequences should be 90% complete with a simple 'getprosol' command. Whenever this
-isn't possible, python or au macros should be provided. 
 
 ## Setup
 
