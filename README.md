@@ -39,13 +39,19 @@ Setup
 
 In a desired directory (Mac/Linux) with 'git' installed, run:
 
-	git clone https://github.com/viochemist/NucAcidNMR.git
+	git clone git@github.com:viochemist/NucAcidNMR.git
 
+Set your name and e-mail with:
+
+	git config --global user.name = "My Name"
+	git config --global user.email = name@something.com
+	
 Once installed, collect any updates by running:
 
 	git pull
 
-To contribute, make changes to your local versions and then run:
+To contribute, run ssh-keygen and/or send me your .ssh/id_rsa.pub so that I can
+generate a key. Then, after you make changes to your local versions, run:
 
 	git add <changed files>
 	git commit -m "Message about changes"
