@@ -1,15 +1,14 @@
 # NucAcidNMR
-*Pulse sequence development for Nucleic Acid NMR experiments*
+#### *Pulse sequence development for Nucleic Acid NMR experiments*
 
-Objectives
-----------
 
-1) To build a thorough library of nucleic acid pulse sequences
 
-2) To optimize all sequences for quick and easy setup by any user
+## Objectives
 
-Conventions
------------
+1. To build a thorough library of nucleic acid pulse sequences
+2. To optimize all sequences for quick and easy setup by any user
+
+## Conventions
 
 The library will be divided into two categories, initially. The *collected* 
 directory will contain pulse sequences found from any NMR lab. These can be
@@ -56,8 +55,7 @@ Organization within these directories is still to be determined. In general, pul
 sequences should be 90% complete with a simple 'getprosol' command. Whenever this
 isn't possible, python or au macros should be provided. 
 
-Setup
------
+## Setup
 
 In a desired directory (Mac/Linux) with 'git' installed, run:
 
