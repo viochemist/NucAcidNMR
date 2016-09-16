@@ -34,29 +34,29 @@ isn't possible, python or au macros should be provided.
 
 ### Example Safety Check
 
-	```
-	1 ze
-	
-	  if "d1 < 0.5" {
-	    2u
-	    print "error: D1 too short"
-	    goto HaltAcqu
-	  }
-	  ...
-	
-	2 d11
-	  ...
-	  < experiment code >
-	  ...
-	
-	  go=2 ...
-	  d11 do:f# ...
-	  d11 mc ...
-	  d11 BLKGRAD
-	  
-	HaltAcqu, d11
-	exit
-	```
+```
+1 ze
+
+  if "d1 < 0.5" {
+    2u
+    print "error: D1 too short"
+    goto HaltAcqu
+  }
+  ...
+
+2 d11
+  ...
+  < experiment code >
+  ...
+
+  go=2 ...
+  d11 do:f# ...
+  d11 mc ...
+  d11 BLKGRAD
+  
+HaltAcqu, d11
+exit
+```
 
 ## Setup
 
