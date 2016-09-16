@@ -26,7 +26,6 @@ conform to the following conventions:
 - All sequences should be well documented
   - Header - references, initialled/dated change list, any special setup instructions
   - Safety checks - after "1 ze" and before the experiment starts, check validity of crucial parameters
-
 	```
 	1 ze
 	
@@ -50,7 +49,6 @@ conform to the following conventions:
 	HaltAcqu, d11
 	exit
 	```
-      
   - Sequence - comment blocks of code (Hx -> HyCz, INEPT, CS Encode, etc.)
   - Footer - all parameters listed (ie. ;p10 : describe), any special processing instructions
  
